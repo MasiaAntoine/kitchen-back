@@ -1,0 +1,23 @@
+{
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "vite build",
+        "dev": "vite",
+        "deploy-api": "node deploy-api.js && pnpm generate-postman",
+        "deploy-vendor": "node deploy-vendor.js",
+        "generate-postman": "php artisan scribe:generate && node generate-postman.js"
+    },
+    "devDependencies": {
+        "@tailwindcss/vite": "^4.0.0",
+        "axios": "^1.8.2",
+        "concurrently": "^9.0.1",
+        "laravel-vite-plugin": "^1.2.0",
+        "tailwindcss": "^4.0.0",
+        "vite": "^6.2.4"
+    },
+    "dependencies": {
+        "dotenv": "^16.5.0",
+        "node-fetch": "^3.3.2"
+    }
+}
