@@ -37,6 +37,7 @@ Route::middleware([BasicAuthMiddleware::class])->group(function () {
     Route::prefix('balances')->group(function () {
         Route::get('/', [BalanceController::class, 'index']);
         Route::post('/{balance_id}/associate', [BalanceController::class, 'associateWithIngredient']);
+        Route::delete('/', [BalanceController::class, 'destroyByMac']);
 
         Route::prefix('reserved-machine')->group(function () {
             Route::post('/', [BalanceController::class, 'store']);

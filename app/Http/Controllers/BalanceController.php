@@ -98,6 +98,7 @@ class BalanceController extends Controller
         $balance = Balance::create([
             'mac_address' => $request->mac_address,
             'name' => $request->name,
+            'last_update' => now(),
         ]);
 
         return response()->json([
@@ -105,8 +106,8 @@ class BalanceController extends Controller
                 'id' => $balance->id,
                 'mac_address' => $balance->mac_address,
                 'name' => $balance->name,
-                'is_online' => false,
-                'last_update' => null,
+                'is_online' => true,
+                'last_update' => $balance->last_update,
             ],
             'message' => 'Balance créée avec succès'
         ], 201);
@@ -308,6 +309,84 @@ class BalanceController extends Controller
             'status' => 'success',
             'message' => 'Quantité mise à jour avec succès',
             'data' => new IngredientResource($ingredient)
+        ]);
+    }
+
+
+    /**
+     * @group Balances
+     * @title Supprimer une balance par adresse MAC
+     * @description Cette route permet de supprimer une balance en utilisant son adresse MAC. Les ingrédients associés à cette balance seront déconnectés.
+     *
+     * @bodyParam mac_address string required L'adresse MAC de la balance à supprimer. Example: 00:11:22:33:44:55
+     *
+     * @response 200 success {
+     *  "status": "success",
+     *  "message": "Balance supprimée avec succès",
+     *  "data": {
+     *    "mac_address": "00:11:22:33:44:55",
+     *    "name": "Balance cuisine"
+     *  }
+     * }
+     *
+     * @response 404 balance_not_found {
+     *  "message": "Balance non trouvée avec cette adresse MAC"
+     * }
+     *
+     * @response 422 validation_error {
+     *  "message": "Le champ adresse MAC est obligatoire",
+     *  "errors": {
+     *    "mac_address": [
+     *      "Le champ adresse MAC est obligatoire"
+     *    ]
+     *  }
+     * }
+     */
+    public function destroyByMac(Request $request): JsonResponse
+    {
+        // Validation
+        $validator = Validator::make($request->all(), [
+            'mac_address' => 'required|string',
+        ], [
+            'mac_address.required' => 'Le champ adresse MAC est obligatoire',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => $validator->errors()->first(),
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        // Recherche de la balance par son adresse MAC
+        $balance = Balance::where('mac_address', $request->mac_address)->first();
+
+        if (!$balance) {
+            return response()->json([
+                'message' => 'Balance non trouvée avec cette adresse MAC'
+            ], 404);
+        }
+
+        // Récupérer les informations de la balance avant de la supprimer
+        $balanceData = [
+            'mac_address' => $balance->mac_address,
+            'name' => $balance->name
+        ];
+
+        // Déconnecter tous les ingrédients associés à cette balance
+        Ingredient::where('balance_id', $balance->id)
+            ->update([
+                'balance_id' => null,
+                'is_connected' => false
+            ]);
+
+        // Supprimer la balance
+        $balance->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Balance supprimée avec succès',
+            'data' => $balanceData
         ]);
     }
 }
