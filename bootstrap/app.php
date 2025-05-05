@@ -28,7 +28,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'ingredients/*',
             'ingredients',
             'types',
-            'measures'
+            'measures',
+            'balances',
+            'balances/*',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

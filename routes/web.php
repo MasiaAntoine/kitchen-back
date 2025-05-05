@@ -6,6 +6,7 @@ use App\Http\Controllers\TypeController;
 use App\Http\Controllers\MeasureController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\BasicAuthMiddleware;
+use App\Http\Controllers\BalanceController;
 
 Route::post('/login', [AuthController::class, 'login']);
 
@@ -24,8 +25,16 @@ Route::middleware([BasicAuthMiddleware::class])->group(function () {
     });
 
     // Route pour récupérer tous les types
-    Route::get('/types', [TypeController::class, 'index']);
+    Route::prefix('types')->group(function () {
+        Route::post('/', [TypeController::class, 'index']);
+    });
 
     // Route pour récupérer toutes les mesures
-    Route::get('/measures', [MeasureController::class, 'index']);
+    Route::prefix('measures')->group(function () {
+        Route::get('/', [MeasureController::class, 'index']);
+    });
+
+    Route::prefix('balances')->group(function () {
+        Route::get('/', [BalanceController::class, 'index']);
+    });
 });
