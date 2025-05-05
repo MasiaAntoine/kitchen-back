@@ -27,3 +27,4 @@ kitchen
 /public/vendor/scribe
 postman_generate.json
 .scribe/*
+.DS_Store
