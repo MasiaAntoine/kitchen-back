@@ -15,10 +15,10 @@ Route::middleware([BasicAuthMiddleware::class])->group(function () {
     // Routes des ingrédients
     Route::prefix('ingredients')->group(function () {
         Route::get('/', [IngredientController::class, 'index']);
+        Route::post('/', [IngredientController::class, 'create']);
         Route::get('/by-type', [IngredientController::class, 'getIngredientsByType']);
         Route::get('/low-stock', [IngredientController::class, 'getLowStockIngredients']);
         Route::get('/connected', [IngredientController::class, 'getConnectedIngredients']);
-        Route::post('/', [IngredientController::class, 'create']);
         Route::delete('/batch', [IngredientController::class, 'batchDestroy']);
         Route::delete('/{id}', [IngredientController::class, 'destroy']);
         Route::patch('/{id}/quantity', [IngredientController::class, 'updateQuantity']);
@@ -36,5 +36,11 @@ Route::middleware([BasicAuthMiddleware::class])->group(function () {
 
     Route::prefix('balances')->group(function () {
         Route::get('/', [BalanceController::class, 'index']);
+        Route::post('/{balance_id}/associate', [BalanceController::class, 'associateWithIngredient']);
+
+        Route::prefix('reserved-machine')->group(function () {
+            Route::post('/', [BalanceController::class, 'store']);
+            Route::post('/update-quantity', [BalanceController::class, 'updateQuantityByMac']);
+        });
     });
 });
