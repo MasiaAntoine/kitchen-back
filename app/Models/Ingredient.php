@@ -17,6 +17,7 @@ class Ingredient extends Model
         'quantity',
         'max_quantity',
         'measure_id',
+        'balance_id',
     ];
 
     protected $casts = [
@@ -37,5 +38,10 @@ class Ingredient extends Model
     public function measure(): BelongsTo
     {
         return $this->belongsTo(Measure::class);
+    }
+
+    public function balance(): BelongsTo
+    {
+        return $this->belongsTo(Balance::class);
     }
 }
