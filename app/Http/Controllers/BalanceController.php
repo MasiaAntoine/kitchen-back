@@ -120,7 +120,7 @@ class BalanceController extends Controller
      * @description Cette route permet d'associer une balance existante à un ingrédient existant.
      * Une balance ne peut être associée qu'à un seul ingrédient à la fois.
      *
-     * @urlParam balance_id required L'identifiant de la balance à associer. Example: 1
+     * @urlParam id_balance required L'identifiant de la balance à associer. Example: 1
      * @bodyParam ingredient_id integer required L'identifiant de l'ingrédient à associer à la balance. Example: 3
      *
      * @response 200 success {
@@ -154,7 +154,7 @@ class BalanceController extends Controller
      *  }
      * }
      */
-    public function associateWithIngredient(Request $request, $balance_id): JsonResponse
+    public function associateWithIngredient(Request $request, $id_balance): JsonResponse
     {
         // Validation
         $validator = Validator::make($request->all(), [
@@ -172,7 +172,7 @@ class BalanceController extends Controller
         }
 
         // Récupération de la balance et de l'ingrédient
-        $balance = Balance::find($balance_id);
+        $balance = Balance::find($id_balance);
         $ingredient = Ingredient::find($request->ingredient_id);
 
         if (!$balance || !$ingredient) {
@@ -180,7 +180,7 @@ class BalanceController extends Controller
         }
 
         // Vérifier si la balance est déjà associée à un autre ingrédient
-        $existingIngredient = Ingredient::where('balance_id', $balance_id)
+        $existingIngredient = Ingredient::where('id_balance', $id_balance)
             ->where('id', '!=', $ingredient->id)
             ->first();
 
@@ -195,8 +195,7 @@ class BalanceController extends Controller
         }
 
         // Associer la balance à l'ingrédient
-        $ingredient->balance_id = $balance_id;
-        $ingredient->is_connected = true;
+        $ingredient->id_balance = $id_balance;
         $ingredient->save();
 
         return response()->json([
@@ -291,7 +290,7 @@ class BalanceController extends Controller
         $balance->save();
 
         // Recherche de l'ingrédient lié à cette balance
-        $ingredient = Ingredient::where('balance_id', $balance->id)->first();
+        $ingredient = Ingredient::where('id_balance', $balance->id)->first();
 
         if (!$ingredient) {
             return response()->json([
@@ -374,10 +373,9 @@ class BalanceController extends Controller
         ];
 
         // Déconnecter tous les ingrédients associés à cette balance
-        Ingredient::where('balance_id', $balance->id)
+        Ingredient::where('id_balance', $balance->id)
             ->update([
-                'balance_id' => null,
-                'is_connected' => false
+                'id_balance' => null,
             ]);
 
         // Supprimer la balance

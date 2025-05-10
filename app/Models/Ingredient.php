@@ -12,12 +12,11 @@ class Ingredient extends Model
 
     protected $fillable = [
         'label',
-        'balance_id',
+        'id_balance',
         'type_id',
         'quantity',
         'max_quantity',
         'measure_id',
-        'balance_id',
     ];
 
     protected $casts = [
@@ -27,7 +26,7 @@ class Ingredient extends Model
 
     public function getIsConnectedAttribute(): bool
     {
-        return !empty($this->balance_id);
+        return !empty($this->id_balance);
     }
 
     public function type(): BelongsTo
@@ -42,6 +41,6 @@ class Ingredient extends Model
 
     public function balance(): BelongsTo
     {
-        return $this->belongsTo(Balance::class);
+        return $this->belongsTo(Balance::class, 'id_balance');
     }
 }
