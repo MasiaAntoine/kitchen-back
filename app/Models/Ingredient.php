@@ -12,7 +12,7 @@ class Ingredient extends Model
 
     protected $fillable = [
         'label',
-        'is_connected',
+        'balance_id',
         'type_id',
         'quantity',
         'max_quantity',
@@ -20,10 +20,14 @@ class Ingredient extends Model
     ];
 
     protected $casts = [
-        'is_connected' => 'boolean',
         'quantity' => 'float',
         'max_quantity' => 'float',
     ];
+
+    public function getIsConnectedAttribute(): bool
+    {
+        return !empty($this->balance_id);
+    }
 
     public function type(): BelongsTo
     {

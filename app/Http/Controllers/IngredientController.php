@@ -186,7 +186,7 @@ class IngredientController extends Controller
     {
         // Récupérer tous les types avec leurs ingrédients non connectés
         $types = Type::with(['ingredients' => function($query) {
-            $query->where('is_connected', false)->with('measure');
+            $query->whereNull('id_balance')->with('measure');
         }])->get();
 
         $result = [];
@@ -236,13 +236,13 @@ class IngredientController extends Controller
     {
         $validated = $request->validate([
             'label' => 'required|string|max:255',
-            'is_connected' => 'boolean',
+            'id_balance' => 'nullable|string|max:255',
             'type_id' => 'required|exists:types,id',
             'measure_id' => 'required|exists:measures,id',
             'max_quantity' => 'required|numeric|min:0',
         ]);
 
-        // Ajouter les valeurs par défaut pour quantity et max_quantity
+        // Ajouter les valeurs par défaut pour quantity
         $validated['quantity'] = 0;
 
         $ingredient = Ingredient::create($validated);
@@ -321,7 +321,7 @@ class IngredientController extends Controller
     public function getConnectedIngredients(): JsonResponse
     {
         $ingredients = Ingredient::with(['type', 'measure'])
-            ->where('is_connected', true)
+            ->whereNotNull('id_balance')
             ->get();
 
         return response()->json([

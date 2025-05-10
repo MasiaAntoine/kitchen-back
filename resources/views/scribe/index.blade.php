@@ -149,7 +149,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: April 28, 2025</li>
+        <li>Last updated: May 10, 2025</li>
     </ul>
 </div>
 
@@ -157,6 +157,7 @@
     <div class="dark-box"></div>
     <div class="content">
         <h1 id="introduction">Introduction</h1>
+<p>Cette API vous permet de gérer vos opérations liées à la cuisine, y compris les recettes, les ingrédients et la planification des repas.</p>
 <aside>
     <strong>Base URL</strong>: <code>http://localhost</code>
 </aside>
@@ -961,10 +962,11 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"label\": \"Courgette\",
-    \"is_connected\": false,
+    \"id_balance\": \"n\",
     \"type_id\": 1,
     \"measure_id\": 1,
-    \"max_quantity\": \"1000\"
+    \"max_quantity\": \"1000\",
+    \"is_connected\": false
 }"
 </code></pre></div>
 
@@ -982,10 +984,11 @@ const headers = {
 
 let body = {
     "label": "Courgette",
-    "is_connected": false,
+    "id_balance": "n",
     "type_id": 1,
     "measure_id": 1,
-    "max_quantity": "1000"
+    "max_quantity": "1000",
+    "is_connected": false
 };
 
 fetch(url, {
@@ -1121,25 +1124,15 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>Le nom de l'ingrédient. Example: <code>Courgette</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>is_connected</code></b>&nbsp;&nbsp;
-<small>boolean</small>&nbsp;
+            <b style="line-height: 2;"><code>id_balance</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
 <i>optional</i> &nbsp;
-                <label data-endpoint="POSTingredients" style="display: none">
-            <input type="radio" name="is_connected"
-                   value="true"
-                   data-endpoint="POSTingredients"
-                   data-component="body"             >
-            <code>true</code>
-        </label>
-        <label data-endpoint="POSTingredients" style="display: none">
-            <input type="radio" name="is_connected"
-                   value="false"
-                   data-endpoint="POSTingredients"
-                   data-component="body"             >
-            <code>false</code>
-        </label>
+                <input type="text" style="display: none"
+                              name="id_balance"                data-endpoint="POSTingredients"
+               value="n"
+               data-component="body">
     <br>
-<p>Indique si l'ingrédient est connecté à un capteur. Example: <code>false</code></p>
+<p>validation.max. Example: <code>n</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>type_id</code></b>&nbsp;&nbsp;
@@ -1173,6 +1166,27 @@ You can check the Dev Tools console for debugging information.</code></pre>
                data-component="body">
     <br>
 <p>La quantité maximale de l'ingrédient. Example: <code>1000</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>is_connected</code></b>&nbsp;&nbsp;
+<small>boolean</small>&nbsp;
+<i>optional</i> &nbsp;
+                <label data-endpoint="POSTingredients" style="display: none">
+            <input type="radio" name="is_connected"
+                   value="true"
+                   data-endpoint="POSTingredients"
+                   data-component="body"             >
+            <code>true</code>
+        </label>
+        <label data-endpoint="POSTingredients" style="display: none">
+            <input type="radio" name="is_connected"
+                   value="false"
+                   data-endpoint="POSTingredients"
+                   data-component="body"             >
+            <code>false</code>
+        </label>
+    <br>
+<p>Indique si l'ingrédient est connecté à un capteur. Example: <code>false</code></p>
         </div>
         </form>
 
@@ -2086,7 +2100,7 @@ access-control-allow-headers: Content-Type, Authorization, X-Requested-With
                 &lt;p class=&quot;mt-2 text-gray-500 dark:text-gray-400 text-sm leading-relaxed&quot;&gt;
                     HTTP request received.
 
-                                            Response rendered in 596ms.
+                                            Response rendered in 370ms.
                                     &lt;/p&gt;
             &lt;/div&gt;
         &lt;/div&gt;
@@ -2219,7 +2233,7 @@ fetch(url, {
 
 <span id="example-responses-GETstorage--path-">
             <blockquote>
-            <p>Example response (403):</p>
+            <p>Example response (404):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
