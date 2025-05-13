@@ -14,9 +14,6 @@ class IngredientSeeder extends Seeder
      */
     public function run(): void
     {
-        // Vider la table avant de la remplir
-        Ingredient::truncate();
-
         // Récupération des IDs nécessaires
         $placard = Type::where('name', 'Placard')->first()->id;
         $frigo = Type::where('name', 'Frigo')->first()->id;
@@ -108,13 +105,6 @@ class IngredientSeeder extends Seeder
                 'quantity' => $quantity,
                 'max_quantity' => 2,
                 'measure_id' => $pc,
-            ],
-            [
-                'label' => 'nuggets de poulet',
-                'type_id' => $congelateur,
-                'quantity' => $quantity,
-                'max_quantity' => 1000,
-                'measure_id' => $g,
             ],
             [
                 'label' => 'nuggets de poulet',
