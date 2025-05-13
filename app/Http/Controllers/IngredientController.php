@@ -9,6 +9,7 @@ use App\Models\Type;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Log;
 
 class IngredientController extends Controller
 {
@@ -181,9 +182,12 @@ class IngredientController extends Controller
      *    ]
      *  }
      * }
-     */
+    */
     public function getIngredientsByType(): JsonResponse
     {
+        // Vérification directe des ingrédients sans balance_id
+        $rawIngredients = Ingredient::whereNull('balance_id')->get();
+
         // Récupérer tous les types avec leurs ingrédients non connectés
         $types = Type::with(['ingredients' => function($query) {
             $query->whereNull('balance_id')->with('measure');
@@ -191,11 +195,29 @@ class IngredientController extends Controller
 
         $result = [];
 
-        // Grouper les ingrédients par type
         foreach ($types as $type) {
-            $result[$type->name] = [
-                'items' => IngredientResource::collection($type->ingredients)->toArray(request())
-            ];
+
+            // Ne pas utiliser toArray() directement sur la collection, mais convertir chaque ingrédient individuellement
+            $ingredientsArray = [];
+            foreach ($type->ingredients as $ingredient) {
+                $ingredientsArray[] = (new IngredientResource($ingredient))->toArray(request());
+            }
+
+            if (count($ingredientsArray) > 0) {
+                $result[$type->name] = [
+                    'items' => $ingredientsArray
+                ];
+            }
+        }
+
+        if (empty($result)) {
+            return response()->json([
+                'message' => 'Aucun ingrédient non connecté trouvé',
+                'debug' => [
+                    'total_types' => $types->count(),
+                    'raw_ingredients_count' => $rawIngredients->count(),
+                ]
+            ]);
         }
 
         return response()->json($result);
