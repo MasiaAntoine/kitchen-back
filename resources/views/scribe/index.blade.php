@@ -962,7 +962,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"label\": \"Courgette\",
-    \"id_balance\": \"n\",
+    \"balance_id\": \"n\",
     \"type_id\": 1,
     \"measure_id\": 1,
     \"max_quantity\": \"1000\",
@@ -984,7 +984,7 @@ const headers = {
 
 let body = {
     "label": "Courgette",
-    "id_balance": "n",
+    "balance_id": "n",
     "type_id": 1,
     "measure_id": 1,
     "max_quantity": "1000",
@@ -1124,11 +1124,11 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>Le nom de l'ingrédient. Example: <code>Courgette</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>id_balance</code></b>&nbsp;&nbsp;
+            <b style="line-height: 2;"><code>balance_id</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
-                              name="id_balance"                data-endpoint="POSTingredients"
+                              name="balance_id"                data-endpoint="POSTingredients"
                value="n"
                data-component="body">
     <br>
