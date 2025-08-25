@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\IngredientRequest;
 use App\Http\Resources\IngredientResource;
 use App\Models\Ingredient;
-use App\Models\Type;
+use App\Models\PlaceType;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -32,7 +32,7 @@ class IngredientController extends Controller
      */
     public function index(): AnonymousResourceCollection
     {
-        $ingredients = Ingredient::with(['type', 'measure'])->get();
+        $ingredients = Ingredient::with(['placeType', 'measurementUnit'])->get();
         return IngredientResource::collection($ingredients);
     }
 
@@ -44,7 +44,7 @@ class IngredientController extends Controller
     {
         $validated = $request->validated();
         $ingredient = Ingredient::create($validated);
-        $ingredient->load(['type', 'measure']);
+        $ingredient->load(['placeType', 'measurementUnit']);
 
         return new IngredientResource($ingredient);
     }
@@ -54,7 +54,7 @@ class IngredientController extends Controller
      */
     public function show(string $id): IngredientResource|JsonResponse
     {
-        $ingredient = Ingredient::with(['type', 'measure'])->find($id);
+        $ingredient = Ingredient::with(['placeType', 'measurementUnit'])->find($id);
 
         if (!$ingredient) {
             return response()->json(['message' => 'Ingrédient non trouvé'], 404);
@@ -76,7 +76,7 @@ class IngredientController extends Controller
 
         $validated = $request->validated();
         $ingredient->update($validated);
-        $ingredient->load(['type', 'measure']);
+        $ingredient->load(['placeType', 'measurementUnit']);
 
         return new IngredientResource($ingredient);
     }
@@ -144,7 +144,7 @@ class IngredientController extends Controller
         $ingredient->quantity = $validated['quantity'];
         $ingredient->save();
 
-        $ingredient->load(['type', 'measure']);
+        $ingredient->load(['placeType', 'measurementUnit']);
 
         return response()->json([
             'status' => 'success',
@@ -188,23 +188,23 @@ class IngredientController extends Controller
         // Vérification directe des ingrédients sans connected_scale_id
         $rawIngredients = Ingredient::whereNull('connected_scale_id')->get();
 
-        // Récupérer tous les types avec leurs ingrédients non connectés
-        $types = Type::with(['ingredients' => function($query) {
-            $query->whereNull('connected_scale_id')->with('measure');
+        // Récupérer tous les types de lieux avec leurs ingrédients non connectés
+        $placeTypes = PlaceType::with(['ingredients' => function($query) {
+            $query->whereNull('connected_scale_id')->with('measurementUnit');
         }])->get();
 
         $result = [];
 
-        foreach ($types as $type) {
+        foreach ($placeTypes as $placeType) {
 
             // Ne pas utiliser toArray() directement sur la collection, mais convertir chaque ingrédient individuellement
             $ingredientsArray = [];
-            foreach ($type->ingredients as $ingredient) {
+            foreach ($placeType->ingredients as $ingredient) {
                 $ingredientsArray[] = (new IngredientResource($ingredient))->toArray(request());
             }
 
             if (count($ingredientsArray) > 0) {
-                $result[$type->name] = [
+                $result[$placeType->name] = [
                     'items' => $ingredientsArray
                 ];
             }
@@ -214,7 +214,7 @@ class IngredientController extends Controller
             return response()->json([
                 'message' => 'Aucun ingrédient non connecté trouvé',
                 'debug' => [
-                    'total_types' => $types->count(),
+                    'total_place_types' => $placeTypes->count(),
                     'raw_ingredients_count' => $rawIngredients->count(),
                 ]
             ]);
@@ -230,8 +230,8 @@ class IngredientController extends Controller
      *
      * @bodyParam label string required Le nom de l'ingrédient. Example: Courgette
      * @bodyParam is_connected boolean Indique si l'ingrédient est connecté à un capteur. Example: false
-     * @bodyParam type_id integer required L'identifiant du type d'ingrédient. Example: 1
-     * @bodyParam measure_id integer required L'identifiant de l'unité de mesure. Example: 1
+     * @bodyParam place_type_id integer required L'identifiant du type de lieu. Example: 1
+     * @bodyParam measurement_unit_id integer required L'identifiant de l'unité de mesure. Example: 1
      * @bodyParam max_quantity numeric required La quantité maximale de l'ingrédient. Example: 1000
      *
      * @response 201 success {
@@ -250,7 +250,7 @@ class IngredientController extends Controller
      *  "message": "The given data was invalid.",
      *  "errors": {
      *    "label": ["Le champ label est obligatoire."],
-     *    "type_id": ["Le champ type_id doit être un identifiant existant dans la table types."]
+     *    "place_type_id": ["Le champ place_type_id doit être un identifiant existant dans la table place_types."]
      *  }
      * }
      */
@@ -259,8 +259,8 @@ class IngredientController extends Controller
         $validated = $request->validate([
             'label' => 'required|string|max:255',
             'connected_scale_id' => 'nullable|integer|exists:connected_scales,id',
-            'type_id' => 'required|exists:types,id',
-            'measure_id' => 'required|exists:measures,id',
+            'place_type_id' => 'required|exists:place_types,id',
+            'measurement_unit_id' => 'required|exists:measurement_units,id',
             'max_quantity' => 'required|numeric|min:0',
         ]);
 
@@ -268,7 +268,7 @@ class IngredientController extends Controller
         $validated['quantity'] = 0;
 
         $ingredient = Ingredient::create($validated);
-        $ingredient->load(['type', 'measure']);
+        $ingredient->load(['placeType', 'measurementUnit']);
 
         return response()->json([
             'status' => 'success',
@@ -304,7 +304,7 @@ class IngredientController extends Controller
      */
     public function getLowStockIngredients(): JsonResponse
     {
-        $ingredients = Ingredient::with(['type', 'measure'])
+        $ingredients = Ingredient::with(['placeType', 'measurementUnit'])
             ->whereRaw('quantity <= (max_quantity * 0.5)')
             ->where('max_quantity', '>', 0)  // Éviter la division par zéro
             ->get();
@@ -342,7 +342,7 @@ class IngredientController extends Controller
      */
     public function getConnectedIngredients(): JsonResponse
     {
-        $ingredients = Ingredient::with(['type', 'measure'])
+        $ingredients = Ingredient::with(['placeType', 'measurementUnit'])
             ->whereNotNull('connected_scale_id')
             ->get();
 

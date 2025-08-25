@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\Type;
-use App\Models\Measure;
+use App\Models\PlaceType;
+use App\Models\MeasurementUnit;
 use App\Models\ConnectedScale;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -21,8 +21,8 @@ class IngredientFactory extends Factory
     {
         return [
             'label' => fake()->words(2, true),
-            'type_id' => Type::factory(),
-            'measure_id' => Measure::factory(),
+            'place_type_id' => PlaceType::factory(),
+            'measurement_unit_id' => MeasurementUnit::factory(),
             'connected_scale_id' => null,
             'quantity' => fake()->randomFloat(2, 0, 1000),
             'max_quantity' => fake()->randomFloat(2, 100, 2000),

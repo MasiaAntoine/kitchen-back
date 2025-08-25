@@ -16,30 +16,30 @@ class ModelRelationshipsTest extends TestCase
 
     public function test_type_has_many_ingredients_relationship()
     {
-        $type = Type::create(['name' => 'Légumes']);
+        $placeType = PlaceType::create(['name' => 'Légumes']);
         
-        $ingredient1 = Ingredient::factory()->create(['type_id' => $type->id]);
-        $ingredient2 = Ingredient::factory()->create(['type_id' => $type->id]);
-        $ingredient3 = Ingredient::factory()->create(['type_id' => $type->id]);
+        $ingredient1 = Ingredient::factory()->create(['place_type_id' => $placeType->id]);
+        $ingredient2 = Ingredient::factory()->create(['place_type_id' => $placeType->id]);
+        $ingredient3 = Ingredient::factory()->create(['place_type_id' => $placeType->id]);
 
-        $this->assertCount(3, $type->ingredients);
-        $this->assertInstanceOf(Ingredient::class, $type->ingredients->first());
-        $this->assertTrue($type->ingredients->contains($ingredient1));
-        $this->assertTrue($type->ingredients->contains($ingredient2));
-        $this->assertTrue($type->ingredients->contains($ingredient3));
+        $this->assertCount(3, $placeType->ingredients);
+        $this->assertInstanceOf(Ingredient::class, $placeType->ingredients->first());
+        $this->assertTrue($placeType->ingredients->contains($ingredient1));
+        $this->assertTrue($placeType->ingredients->contains($ingredient2));
+        $this->assertTrue($placeType->ingredients->contains($ingredient3));
     }
 
     public function test_measure_has_many_ingredients_relationship()
     {
-        $measure = Measure::create(['name' => 'Grammes', 'symbol' => 'g']);
+        $measurementUnit = MeasurementUnit::create(['name' => 'Grammes', 'symbol' => 'g']);
         
-        $ingredient1 = Ingredient::factory()->create(['measure_id' => $measure->id]);
-        $ingredient2 = Ingredient::factory()->create(['measure_id' => $measure->id]);
+        $ingredient1 = Ingredient::factory()->create(['measurement_unit_id' => $measurementUnit->id]);
+        $ingredient2 = Ingredient::factory()->create(['measurement_unit_id' => $measurementUnit->id]);
 
-        $this->assertCount(2, $measure->ingredients);
-        $this->assertInstanceOf(Ingredient::class, $measure->ingredients->first());
-        $this->assertTrue($measure->ingredients->contains($ingredient1));
-        $this->assertTrue($measure->ingredients->contains($ingredient2));
+        $this->assertCount(2, $measurementUnit->ingredients);
+        $this->assertInstanceOf(Ingredient::class, $measurementUnit->ingredients->first());
+        $this->assertTrue($measurementUnit->ingredients->contains($ingredient1));
+        $this->assertTrue($measurementUnit->ingredients->contains($ingredient2));
     }
 
     public function test_connected_scale_has_one_ingredient_relationship()
@@ -58,22 +58,22 @@ class ModelRelationshipsTest extends TestCase
 
     public function test_ingredient_belongs_to_type_relationship()
     {
-        $type = Type::create(['name' => 'Viandes']);
-        $ingredient = Ingredient::factory()->create(['type_id' => $type->id]);
+        $placeType = PlaceType::create(['name' => 'Viandes']);
+        $ingredient = Ingredient::factory()->create(['place_type_id' => $placeType->id]);
 
-        $this->assertInstanceOf(Type::class, $ingredient->type);
-        $this->assertEquals($type->id, $ingredient->type->id);
-        $this->assertEquals('Viandes', $ingredient->type->name);
+        $this->assertInstanceOf(PlaceType::class, $ingredient->placeType);
+        $this->assertEquals($placeType->id, $ingredient->placeType->id);
+        $this->assertEquals('Viandes', $ingredient->placeType->name);
     }
 
     public function test_ingredient_belongs_to_measure_relationship()
     {
-        $measure = Measure::create(['name' => 'Kilogrammes', 'symbol' => 'kg']);
-        $ingredient = Ingredient::factory()->create(['measure_id' => $measure->id]);
+        $measurementUnit = MeasurementUnit::create(['name' => 'Kilogrammes', 'symbol' => 'kg']);
+        $ingredient = Ingredient::factory()->create(['measurement_unit_id' => $measurementUnit->id]);
 
-        $this->assertInstanceOf(Measure::class, $ingredient->measure);
-        $this->assertEquals($measure->id, $ingredient->measure->id);
-        $this->assertEquals('Kilogrammes', $ingredient->measure->name);
+        $this->assertInstanceOf(MeasurementUnit::class, $ingredient->measurementUnit);
+        $this->assertEquals($measurementUnit->id, $ingredient->measurementUnit->id);
+        $this->assertEquals('Kilogrammes', $ingredient->measurementUnit->name);
     }
 
     public function test_ingredient_belongs_to_connected_scale_relationship()
@@ -94,46 +94,46 @@ class ModelRelationshipsTest extends TestCase
     public function test_cascade_relationships_work_correctly()
     {
         // Créer un type avec plusieurs ingrédients
-        $type = Type::create(['name' => 'Épices']);
-        $measure = Measure::create(['name' => 'Grammes', 'symbol' => 'g']);
+        $placeType = PlaceType::create(['name' => 'Épices']);
+        $measurementUnit = MeasurementUnit::create(['name' => 'Grammes', 'symbol' => 'g']);
         
         $ingredient1 = Ingredient::factory()->create([
-            'type_id' => $type->id,
-            'measure_id' => $measure->id,
+            'place_type_id' => $placeType->id,
+            'measurement_unit_id' => $measurementUnit->id,
             'label' => 'Poivre',
         ]);
         
         $ingredient2 = Ingredient::factory()->create([
-            'type_id' => $type->id,
-            'measure_id' => $measure->id,
+            'place_type_id' => $placeType->id,
+            'measurement_unit_id' => $measurementUnit->id,
             'label' => 'Sel',
         ]);
 
         // Vérifier que le type a bien les deux ingrédients
-        $this->assertCount(2, $type->ingredients);
-        $this->assertTrue($type->ingredients->contains($ingredient1));
-        $this->assertTrue($type->ingredients->contains($ingredient2));
+        $this->assertCount(2, $placeType->ingredients);
+        $this->assertTrue($placeType->ingredients->contains($ingredient1));
+        $this->assertTrue($placeType->ingredients->contains($ingredient2));
 
         // Vérifier que la mesure a bien les deux ingrédients
-        $this->assertCount(2, $measure->ingredients);
-        $this->assertTrue($measure->ingredients->contains($ingredient1));
-        $this->assertTrue($measure->ingredients->contains($ingredient2));
+        $this->assertCount(2, $measurementUnit->ingredients);
+        $this->assertTrue($measurementUnit->ingredients->contains($ingredient1));
+        $this->assertTrue($measurementUnit->ingredients->contains($ingredient2));
 
-        // Vérifier que chaque ingrédient pointe vers le bon type et la bonne mesure
-        $this->assertEquals($type->id, $ingredient1->type->id);
-        $this->assertEquals($measure->id, $ingredient1->measure->id);
-        $this->assertEquals($type->id, $ingredient2->type->id);
-        $this->assertEquals($measure->id, $ingredient2->measure->id);
+        // Vérifier que chaque ingrédient pointe vers le bon type de lieu et la bonne unité de mesure
+        $this->assertEquals($placeType->id, $ingredient1->placeType->id);
+        $this->assertEquals($measurementUnit->id, $ingredient1->measurementUnit->id);
+        $this->assertEquals($placeType->id, $ingredient2->placeType->id);
+        $this->assertEquals($measurementUnit->id, $ingredient2->measurementUnit->id);
     }
 
     public function test_ingredient_without_connected_scale_has_null_connected_scale_relationship()
     {
-        $type = Type::factory()->create();
-        $measure = Measure::factory()->create();
+        $placeType = PlaceType::factory()->create();
+        $measurementUnit = MeasurementUnit::factory()->create();
         
         $ingredient = Ingredient::factory()->create([
-            'type_id' => $type->id,
-            'measure_id' => $measure->id,
+            'place_type_id' => $placeType->id,
+            'measurement_unit_id' => $measurementUnit->id,
             'connected_scale_id' => null,
         ]);
 
@@ -143,13 +143,13 @@ class ModelRelationshipsTest extends TestCase
 
     public function test_ingredient_with_connected_scale_has_valid_connected_scale_relationship()
     {
-        $type = Type::factory()->create();
-        $measure = Measure::factory()->create();
+        $placeType = PlaceType::factory()->create();
+        $measurementUnit = MeasurementUnit::factory()->create();
         $connectedScale = ConnectedScale::factory()->create();
         
         $ingredient = Ingredient::factory()->create([
-            'type_id' => $type->id,
-            'measure_id' => $measure->id,
+            'place_type_id' => $placeType->id,
+            'measurement_unit_id' => $measurementUnit->id,
             'connected_scale_id' => $connectedScale->id,
         ]);
 

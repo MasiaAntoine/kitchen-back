@@ -16,13 +16,13 @@ class IngredientResourceTest extends TestCase
 
     public function test_ingredient_resource_transforms_ingredient_data()
     {
-        $type = Type::factory()->create(['name' => 'Légumes']);
-        $measure = Measure::factory()->create(['name' => 'Grammes', 'symbol' => 'g']);
+        $placeType = PlaceType::factory()->create(['name' => 'Légumes']);
+        $measurementUnit = MeasurementUnit::factory()->create(['name' => 'Grammes', 'symbol' => 'g']);
         
         $ingredient = Ingredient::factory()->create([
             'label' => 'Tomate',
-            'type_id' => $type->id,
-            'measure_id' => $measure->id,
+            'place_type_id' => $placeType->id,
+            'measurement_unit_id' => $measurementUnit->id,
             'quantity' => 500,
             'max_quantity' => 1000,
         ]);
@@ -45,12 +45,12 @@ class IngredientResourceTest extends TestCase
 
     public function test_ingredient_resource_includes_type_information()
     {
-        $type = Type::factory()->create(['name' => 'Viandes']);
-        $measure = Measure::factory()->create(['name' => 'Kilogrammes', 'symbol' => 'kg']);
+        $placeType = PlaceType::factory()->create(['name' => 'Viandes']);
+        $measurementUnit = MeasurementUnit::factory()->create(['name' => 'Kilogrammes', 'symbol' => 'kg']);
         
         $ingredient = Ingredient::factory()->create([
-            'type_id' => $type->id,
-            'measure_id' => $measure->id,
+            'place_type_id' => $placeType->id,
+            'measurement_unit_id' => $measurementUnit->id,
         ]);
 
         // Charger les relations
@@ -66,12 +66,12 @@ class IngredientResourceTest extends TestCase
 
     public function test_ingredient_resource_includes_measure_information()
     {
-        $type = Type::factory()->create();
-        $measure = Measure::factory()->create(['name' => 'Millilitres', 'symbol' => 'ml']);
+        $placeType = PlaceType::factory()->create();
+        $measurementUnit = MeasurementUnit::factory()->create(['name' => 'Millilitres', 'symbol' => 'ml']);
         
         $ingredient = Ingredient::factory()->create([
-            'type_id' => $type->id,
-            'measure_id' => $measure->id,
+            'place_type_id' => $placeType->id,
+            'measurement_unit_id' => $measurementUnit->id,
         ]);
 
         // Charger les relations
@@ -88,18 +88,18 @@ class IngredientResourceTest extends TestCase
 
     public function test_ingredient_resource_collection_works_correctly()
     {
-        $type = Type::factory()->create();
-        $measure = Measure::factory()->create();
+        $placeType = PlaceType::factory()->create();
+        $measurementUnit = MeasurementUnit::factory()->create();
         
         $ingredient1 = Ingredient::factory()->create([
-            'type_id' => $type->id,
-            'measure_id' => $measure->id,
+            'place_type_id' => $placeType->id,
+            'measurement_unit_id' => $measurementUnit->id,
             'label' => 'Ingrédient 1',
         ]);
         
         $ingredient2 = Ingredient::factory()->create([
-            'type_id' => $type->id,
-            'measure_id' => $measure->id,
+            'place_type_id' => $placeType->id,
+            'measurement_unit_id' => $measurementUnit->id,
             'label' => 'Ingrédient 2',
         ]);
 
@@ -114,12 +114,12 @@ class IngredientResourceTest extends TestCase
 
     public function test_ingredient_resource_handles_null_connected_scale_id()
     {
-        $type = Type::factory()->create();
-        $measure = Measure::factory()->create();
+        $placeType = PlaceType::factory()->create();
+        $measurementUnit = MeasurementUnit::factory()->create();
         
         $ingredient = Ingredient::factory()->create([
-            'type_id' => $type->id,
-            'measure_id' => $measure->id,
+            'place_type_id' => $placeType->id,
+            'measurement_unit_id' => $measurementUnit->id,
             'connected_scale_id' => null,
         ]);
 
@@ -133,13 +133,13 @@ class IngredientResourceTest extends TestCase
 
     public function test_ingredient_resource_handles_connected_scale_id()
     {
-        $type = Type::factory()->create();
-        $measure = Measure::factory()->create();
+        $placeType = PlaceType::factory()->create();
+        $measurementUnit = MeasurementUnit::factory()->create();
         $connectedScale = \App\Models\ConnectedScale::factory()->create();
         
         $ingredient = Ingredient::factory()->create([
-            'type_id' => $type->id,
-            'measure_id' => $measure->id,
+            'place_type_id' => $placeType->id,
+            'measurement_unit_id' => $measurementUnit->id,
             'connected_scale_id' => $connectedScale->id,
         ]);
 

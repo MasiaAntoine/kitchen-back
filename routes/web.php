@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\TypeController;
-use App\Http\Controllers\MeasureController;
+use App\Http\Controllers\PlaceTypeController;
+use App\Http\Controllers\MeasurementUnitController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\BasicAuthMiddleware;
 use App\Http\Controllers\ConnectedScaleController;
@@ -24,14 +24,14 @@ Route::middleware([BasicAuthMiddleware::class])->group(function () {
         Route::patch('/{id}/quantity', [IngredientController::class, 'updateQuantity']);
     });
 
-    // Route pour récupérer tous les types
-    Route::prefix('types')->group(function () {
-        Route::post('/', [TypeController::class, 'index']);
+    // Route pour récupérer tous les types de lieux
+    Route::prefix('place-types')->group(function () {
+        Route::get('/', [PlaceTypeController::class, 'index']);
     });
 
-    // Route pour récupérer toutes les mesures
-    Route::prefix('measures')->group(function () {
-        Route::get('/', [MeasureController::class, 'index']);
+    // Route pour récupérer toutes les unités de mesure
+    Route::prefix('measurement-units')->group(function () {
+        Route::get('/', [MeasurementUnitController::class, 'index']);
     });
 
     Route::prefix('connected-scales')->group(function () {

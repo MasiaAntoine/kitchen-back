@@ -13,10 +13,10 @@ class Ingredient extends Model
     protected $fillable = [
         'label',
         'connected_scale_id',
-        'type_id',
+        'place_type_id',
         'quantity',
         'max_quantity',
-        'measure_id',
+        'measurement_unit_id',
     ];
 
     protected $casts = [
@@ -29,14 +29,14 @@ class Ingredient extends Model
         return !empty($this->connected_scale_id);
     }
 
-    public function type(): BelongsTo
+    public function placeType(): BelongsTo
     {
-        return $this->belongsTo(Type::class);
+        return $this->belongsTo(PlaceType::class);
     }
 
-    public function measure(): BelongsTo
+    public function measurementUnit(): BelongsTo
     {
-        return $this->belongsTo(Measure::class);
+        return $this->belongsTo(MeasurementUnit::class);
     }
 
     public function connectedScale(): BelongsTo

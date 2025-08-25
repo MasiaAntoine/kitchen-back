@@ -58,11 +58,11 @@ class IngredientControllerTest extends TestCase
 
     public function test_ingredient_controller_can_show_ingredient()
     {
-        $type = Type::factory()->create();
-        $measure = Measure::factory()->create();
+        $placeType = PlaceType::factory()->create();
+        $measurementUnit = MeasurementUnit::factory()->create();
         $ingredient = Ingredient::factory()->create([
-            'type_id' => $type->id,
-            'measure_id' => $measure->id,
+            'place_type_id' => $placeType->id,
+            'measurement_unit_id' => $measurementUnit->id,
         ]);
         
         $response = $this->controller->show($ingredient->id);
@@ -86,11 +86,11 @@ class IngredientControllerTest extends TestCase
 
     public function test_ingredient_controller_can_destroy_ingredient()
     {
-        $type = Type::factory()->create();
-        $measure = Measure::factory()->create();
+        $placeType = PlaceType::factory()->create();
+        $measurementUnit = MeasurementUnit::factory()->create();
         $ingredient = Ingredient::factory()->create([
-            'type_id' => $type->id,
-            'measure_id' => $measure->id,
+            'place_type_id' => $placeType->id,
+            'measurement_unit_id' => $measurementUnit->id,
         ]);
         
         $response = $this->controller->destroy($ingredient->id);
@@ -102,11 +102,11 @@ class IngredientControllerTest extends TestCase
 
     public function test_ingredient_controller_can_update_quantity()
     {
-        $type = Type::factory()->create();
-        $measure = Measure::factory()->create();
+        $placeType = PlaceType::factory()->create();
+        $measurementUnit = MeasurementUnit::factory()->create();
         $ingredient = Ingredient::factory()->create([
-            'type_id' => $type->id,
-            'measure_id' => $measure->id,
+            'place_type_id' => $placeType->id,
+            'measurement_unit_id' => $measurementUnit->id,
             'quantity' => 100,
         ]);
         
@@ -122,13 +122,13 @@ class IngredientControllerTest extends TestCase
 
     public function test_ingredient_controller_can_get_low_stock_ingredients()
     {
-        $type = Type::factory()->create();
-        $measure = Measure::factory()->create();
+        $placeType = PlaceType::factory()->create();
+        $measurementUnit = MeasurementUnit::factory()->create();
         
         // Créer un ingrédient en rupture de stock (quantité < 50% de max)
         Ingredient::factory()->create([
-            'type_id' => $type->id,
-            'measure_id' => $measure->id,
+            'place_type_id' => $placeType->id,
+            'measurement_unit_id' => $measurementUnit->id,
             'quantity' => 100,
             'max_quantity' => 1000,
         ]);
@@ -141,13 +141,13 @@ class IngredientControllerTest extends TestCase
 
     public function test_ingredient_controller_can_get_connected_ingredients()
     {
-        $type = Type::factory()->create();
-        $measure = Measure::factory()->create();
+        $placeType = PlaceType::factory()->create();
+        $measurementUnit = MeasurementUnit::factory()->create();
         $connectedScale = ConnectedScale::factory()->create();
         
         Ingredient::factory()->create([
-            'type_id' => $type->id,
-            'measure_id' => $measure->id,
+            'place_type_id' => $placeType->id,
+            'measurement_unit_id' => $measurementUnit->id,
             'connected_scale_id' => $connectedScale->id,
         ]);
         
@@ -159,17 +159,17 @@ class IngredientControllerTest extends TestCase
 
     public function test_ingredient_controller_can_batch_destroy_ingredients()
     {
-        $type = Type::factory()->create();
-        $measure = Measure::factory()->create();
+        $placeType = PlaceType::factory()->create();
+        $measurementUnit = MeasurementUnit::factory()->create();
         
         $ingredient1 = Ingredient::factory()->create([
-            'type_id' => $type->id,
-            'measure_id' => $measure->id,
+            'place_type_id' => $placeType->id,
+            'measurement_unit_id' => $measurementUnit->id,
         ]);
         
         $ingredient2 = Ingredient::factory()->create([
-            'type_id' => $type->id,
-            'measure_id' => $measure->id,
+            'place_type_id' => $placeType->id,
+            'measurement_unit_id' => $measurementUnit->id,
         ]);
         
         $request = new Request();

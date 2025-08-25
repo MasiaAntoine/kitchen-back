@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Measure;
+use App\Models\MeasurementUnit;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class MeasureController extends Controller
+class MeasurementUnitController extends Controller
 {
 
     /**
-     * @group Mesures
+     * @group MeasurementUnits
      * @title Récupérer toutes les unités de mesure
      * @description Cette route permet de récupérer la liste de toutes les unités de mesure disponibles.
      *
@@ -37,11 +37,11 @@ class MeasureController extends Controller
      */
     public function index(): JsonResponse
     {
-        $measures = Measure::select('id', 'name', 'symbol')->get();
+        $measurementUnits = MeasurementUnit::select('id', 'name', 'symbol')->get();
 
         return response()->json([
             'status' => 'success',
-            'data' => $measures
+            'data' => $measurementUnits
         ]);
     }
 

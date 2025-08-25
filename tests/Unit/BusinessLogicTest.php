@@ -15,13 +15,13 @@ class BusinessLogicTest extends TestCase
 
     public function test_ingredient_stock_level_calculation()
     {
-        $type = Type::factory()->create();
-        $measure = Measure::factory()->create();
+        $placeType = PlaceType::factory()->create();
+        $measurementUnit = MeasurementUnit::factory()->create();
         
         $ingredient = Ingredient::create([
             'label' => 'Test Stock',
-            'type_id' => $type->id,
-            'measure_id' => $measure->id,
+            'place_type_id' => $placeType->id,
+            'measurement_unit_id' => $measurementUnit->id,
             'quantity' => 300,
             'max_quantity' => 1000,
         ]);
@@ -34,21 +34,21 @@ class BusinessLogicTest extends TestCase
 
     public function test_ingredient_is_low_stock_when_below_50_percent()
     {
-        $type = Type::factory()->create();
-        $measure = Measure::factory()->create();
+        $placeType = PlaceType::factory()->create();
+        $measurementUnit = MeasurementUnit::factory()->create();
         
         $lowStockIngredient = Ingredient::create([
             'label' => 'Stock Faible',
-            'type_id' => $type->id,
-            'measure_id' => $measure->id,
+            'place_type_id' => $placeType->id,
+            'measurement_unit_id' => $measurementUnit->id,
             'quantity' => 200,
             'max_quantity' => 1000,
         ]);
 
         $normalStockIngredient = Ingredient::create([
             'label' => 'Stock Normal',
-            'type_id' => $type->id,
-            'measure_id' => $measure->id,
+            'place_type_id' => $placeType->id,
+            'measurement_unit_id' => $measurementUnit->id,
             'quantity' => 700,
             'max_quantity' => 1000,
         ]);
@@ -77,14 +77,14 @@ class BusinessLogicTest extends TestCase
 
     public function test_ingredient_connection_status()
     {
-        $type = Type::factory()->create();
-        $measure = Measure::factory()->create();
+        $placeType = PlaceType::factory()->create();
+        $measurementUnit = MeasurementUnit::factory()->create();
         $connectedScale = ConnectedScale::factory()->create();
         
         $connectedIngredient = Ingredient::create([
             'label' => 'Connecté',
-            'type_id' => $type->id,
-            'measure_id' => $measure->id,
+            'place_type_id' => $placeType->id,
+            'measurement_unit_id' => $measurementUnit->id,
             'connected_scale_id' => $connectedScale->id,
             'quantity' => 500,
             'max_quantity' => 1000,
@@ -92,8 +92,8 @@ class BusinessLogicTest extends TestCase
 
         $disconnectedIngredient = Ingredient::create([
             'label' => 'Non Connecté',
-            'type_id' => $type->id,
-            'measure_id' => $measure->id,
+            'place_type_id' => $placeType->id,
+            'measurement_unit_id' => $measurementUnit->id,
             'connected_scale_id' => null,
             'quantity' => 300,
             'max_quantity' => 800,
@@ -105,13 +105,13 @@ class BusinessLogicTest extends TestCase
 
     public function test_ingredient_quantity_validation()
     {
-        $type = Type::factory()->create();
-        $measure = Measure::factory()->create();
+        $placeType = PlaceType::factory()->create();
+        $measurementUnit = MeasurementUnit::factory()->create();
         
         $ingredient = Ingredient::create([
             'label' => 'Test Quantité',
-            'type_id' => $type->id,
-            'measure_id' => $measure->id,
+            'place_type_id' => $placeType->id,
+            'measurement_unit_id' => $measurementUnit->id,
             'quantity' => 500,
             'max_quantity' => 1000,
         ]);
@@ -125,32 +125,32 @@ class BusinessLogicTest extends TestCase
 
     public function test_ingredient_type_categorization()
     {
-        $legumesType = Type::create(['name' => 'Légumes']);
-        $viandesType = Type::create(['name' => 'Viandes']);
-        $epicesType = Type::create(['name' => 'Épices']);
+        $legumesType = PlaceType::create(['name' => 'Légumes']);
+        $viandesType = PlaceType::create(['name' => 'Viandes']);
+        $epicesType = PlaceType::create(['name' => 'Épices']);
         
-        $measure = Measure::factory()->create();
+        $measurementUnit = MeasurementUnit::factory()->create();
         
         $tomate = Ingredient::create([
             'label' => 'Tomate',
-            'type_id' => $legumesType->id,
-            'measure_id' => $measure->id,
+            'place_type_id' => $legumesType->id,
+            'measurement_unit_id' => $measurementUnit->id,
             'quantity' => 500,
             'max_quantity' => 1000,
         ]);
 
         $poulet = Ingredient::create([
             'label' => 'Poulet',
-            'type_id' => $viandesType->id,
-            'measure_id' => $measure->id,
+            'place_type_id' => $viandesType->id,
+            'measurement_unit_id' => $measurementUnit->id,
             'quantity' => 1000,
             'max_quantity' => 2000,
         ]);
 
         $poivre = Ingredient::create([
             'label' => 'Poivre',
-            'type_id' => $epicesType->id,
-            'measure_id' => $measure->id,
+            'place_type_id' => $epicesType->id,
+            'measurement_unit_id' => $measurementUnit->id,
             'quantity' => 100,
             'max_quantity' => 500,
         ]);
@@ -162,24 +162,24 @@ class BusinessLogicTest extends TestCase
 
     public function test_measure_unit_consistency()
     {
-        $grammes = Measure::create(['name' => 'Grammes', 'symbol' => 'g']);
-        $kilogrammes = Measure::create(['name' => 'Kilogrammes', 'symbol' => 'kg']);
-        $millilitres = Measure::create(['name' => 'Millilitres', 'symbol' => 'ml']);
+        $grammes = MeasurementUnit::create(['name' => 'Grammes', 'symbol' => 'g']);
+        $kilogrammes = MeasurementUnit::create(['name' => 'Kilogrammes', 'symbol' => 'kg']);
+        $millilitres = MeasurementUnit::create(['name' => 'Millilitres', 'symbol' => 'ml']);
         
-        $type = Type::factory()->create();
+        $placeType = PlaceType::factory()->create();
         
         $ingredient1 = Ingredient::create([
             'label' => 'Ingrédient en grammes',
-            'type_id' => $type->id,
-            'measure_id' => $grammes->id,
+            'place_type_id' => $placeType->id,
+            'measurement_unit_id' => $grammes->id,
             'quantity' => 500,
             'max_quantity' => 1000,
         ]);
 
         $ingredient2 = Ingredient::create([
             'label' => 'Ingrédient en kg',
-            'type_id' => $type->id,
-            'measure_id' => $kilogrammes->id,
+            'place_type_id' => $placeType->id,
+            'measurement_unit_id' => $kilogrammes->id,
             'quantity' => 2.5,
             'max_quantity' => 5,
         ]);
@@ -192,8 +192,8 @@ class BusinessLogicTest extends TestCase
 
     public function test_ingredient_balance_association()
     {
-        $type = Type::factory()->create();
-        $measure = Measure::factory()->create();
+        $placeType = PlaceType::factory()->create();
+        $measurementUnit = MeasurementUnit::factory()->create();
         
         $connectedScale1 = ConnectedScale::create([
             'mac_address' => 'AA:BB:CC:DD:EE:FF',
@@ -209,8 +209,8 @@ class BusinessLogicTest extends TestCase
 
         $ingredient1 = Ingredient::create([
             'label' => 'Ingrédient 1',
-            'type_id' => $type->id,
-            'measure_id' => $measure->id,
+            'place_type_id' => $placeType->id,
+            'measurement_unit_id' => $measurementUnit->id,
             'connected_scale_id' => $connectedScale1->id,
             'quantity' => 400,
             'max_quantity' => 1000,
@@ -218,8 +218,8 @@ class BusinessLogicTest extends TestCase
 
         $ingredient2 = Ingredient::create([
             'label' => 'Ingrédient 2',
-            'type_id' => $type->id,
-            'measure_id' => $measure->id,
+            'place_type_id' => $placeType->id,
+            'measurement_unit_id' => $measurementUnit->id,
             'connected_scale_id' => $connectedScale2->id,
             'quantity' => 600,
             'max_quantity' => 1200,

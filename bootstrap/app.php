@@ -27,8 +27,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'login',
             'ingredients/*',
             'ingredients',
-            'types',
-            'measures',
+            'place-types',
+            'measurement-units',
             'connected-scales',
             'connected-scales/*',
         ]);

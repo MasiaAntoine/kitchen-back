@@ -24,10 +24,10 @@ class IngredientRequest extends FormRequest
         return [
             'label' => 'required|string|max:255',
             'connected_scale_id' => 'nullable|integer|exists:connected_scales,id',
-            'type_id' => 'required|exists:types,id',
+            'place_type_id' => 'required|exists:place_types,id',
             'quantity' => 'numeric|min:0',
             'max_quantity' => 'required|numeric|min:0',
-            'measure_id' => 'required|exists:measures,id',
+            'measurement_unit_id' => 'required|exists:measurement_units,id',
         ];
     }
 
@@ -40,11 +40,11 @@ class IngredientRequest extends FormRequest
     {
         return [
             'label.required' => 'Le nom de l\'ingrédient est obligatoire',
-            'type_id.required' => 'Le type de stockage est obligatoire',
-            'type_id.exists' => 'Le type de stockage sélectionné est invalide',
+            'place_type_id.required' => 'Le type de lieu est obligatoire',
+            'place_type_id.exists' => 'Le type de lieu sélectionné est invalide',
             'max_quantity.required' => 'La quantité maximale est obligatoire',
-            'measure_id.required' => 'L\'unité de mesure est obligatoire',
-            'measure_id.exists' => 'L\'unité de mesure sélectionnée est invalide',
+            'measurement_unit_id.required' => 'L\'unité de mesure est obligatoire',
+            'measurement_unit_id.exists' => 'L\'unité de mesure sélectionnée est invalide',
         ];
     }
 }

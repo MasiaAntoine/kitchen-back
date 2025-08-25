@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Measure>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\MeasurementUnit>
  */
-class MeasureFactory extends Factory
+class MeasurementUnitFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -16,7 +16,7 @@ class MeasureFactory extends Factory
      */
     public function definition(): array
     {
-        $measures = [
+        $measurementUnits = [
             ['name' => 'Grammes', 'symbol' => 'g'],
             ['name' => 'Kilogrammes', 'symbol' => 'kg'],
             ['name' => 'Millilitres', 'symbol' => 'ml'],
@@ -26,11 +26,11 @@ class MeasureFactory extends Factory
             ['name' => 'Cuillères à café', 'symbol' => 'c. à c.'],
         ];
 
-        $measure = fake()->randomElement($measures);
+        $measurementUnit = fake()->randomElement($measurementUnits);
 
         return [
-            'name' => $measure['name'],
-            'symbol' => $measure['symbol'],
+            'name' => $measurementUnit['name'],
+            'symbol' => $measurementUnit['symbol'],
         ];
     }
 }

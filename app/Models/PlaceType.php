@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Measure extends Model
+class PlaceType extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'symbol'];
+    protected $fillable = ['name'];
 
     public function ingredients(): HasMany
     {

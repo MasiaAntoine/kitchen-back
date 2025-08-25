@@ -129,23 +129,23 @@
                             </li>
                                                                         </ul>
                             </ul>
-                    <ul id="tocify-header-mesures" class="tocify-header">
-                <li class="tocify-item level-1" data-unique="mesures">
-                    <a href="#mesures">Mesures</a>
+                    <ul id="tocify-header-measurementunits" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="measurementunits">
+                    <a href="#measurementunits">MeasurementUnits</a>
                 </li>
-                                    <ul id="tocify-subheader-mesures" class="tocify-subheader">
-                                                    <li class="tocify-item level-2" data-unique="mesures-GETmeasures">
-                                <a href="#mesures-GETmeasures">GET measures</a>
+                                    <ul id="tocify-subheader-measurementunits" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="measurementunits-GETmeasurement-units">
+                                <a href="#measurementunits-GETmeasurement-units">GET measurement-units</a>
                             </li>
                                                                         </ul>
                             </ul>
-                    <ul id="tocify-header-types" class="tocify-header">
-                <li class="tocify-item level-1" data-unique="types">
-                    <a href="#types">Types</a>
+                    <ul id="tocify-header-placetypes" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="placetypes">
+                    <a href="#placetypes">PlaceTypes</a>
                 </li>
-                                    <ul id="tocify-subheader-types" class="tocify-subheader">
-                                                    <li class="tocify-item level-2" data-unique="types-POSTtypes">
-                                <a href="#types-POSTtypes">POST types</a>
+                                    <ul id="tocify-subheader-placetypes" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="placetypes-GETplace-types">
+                                <a href="#placetypes-GETplace-types">GET place-types</a>
                             </li>
                                                                         </ul>
                             </ul>
@@ -1459,8 +1459,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"label\": \"Courgette\",
     \"connected_scale_id\": 16,
-    \"type_id\": 1,
-    \"measure_id\": 1,
+    \"place_type_id\": 1,
+    \"measurement_unit_id\": 1,
     \"max_quantity\": \"1000\",
     \"is_connected\": false
 }"
@@ -1481,8 +1481,8 @@ const headers = {
 let body = {
     "label": "Courgette",
     "connected_scale_id": 16,
-    "type_id": 1,
-    "measure_id": 1,
+    "place_type_id": 1,
+    "measurement_unit_id": 1,
     "max_quantity": "1000",
     "is_connected": false
 };
@@ -1522,7 +1522,7 @@ fetch(url, {
  &quot;message&quot;: &quot;The given data was invalid.&quot;,
  &quot;errors&quot;: {
    &quot;label&quot;: [&quot;Le champ label est obligatoire.&quot;],
-   &quot;type_id&quot;: [&quot;Le champ type_id doit &ecirc;tre un identifiant existant dans la table types.&quot;]
+   &quot;place_type_id&quot;: [&quot;Le champ place_type_id doit &ecirc;tre un identifiant existant dans la table place_types.&quot;]
  }
 }</code>
  </pre>
@@ -1631,22 +1631,22 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>The <code>id</code> of an existing record in the connected_scales table. Example: <code>16</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>type_id</code></b>&nbsp;&nbsp;
+            <b style="line-height: 2;"><code>place_type_id</code></b>&nbsp;&nbsp;
 <small>integer</small>&nbsp;
  &nbsp;
                 <input type="number" style="display: none"
-               step="any"               name="type_id"                data-endpoint="POSTingredients"
+               step="any"               name="place_type_id"                data-endpoint="POSTingredients"
                value="1"
                data-component="body">
     <br>
-<p>L'identifiant du type d'ingrédient. Example: <code>1</code></p>
+<p>L'identifiant du type de lieu. Example: <code>1</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>measure_id</code></b>&nbsp;&nbsp;
+            <b style="line-height: 2;"><code>measurement_unit_id</code></b>&nbsp;&nbsp;
 <small>integer</small>&nbsp;
  &nbsp;
                 <input type="number" style="display: none"
-               step="any"               name="measure_id"                data-endpoint="POSTingredients"
+               step="any"               name="measurement_unit_id"                data-endpoint="POSTingredients"
                value="1"
                data-component="body">
     <br>
@@ -2642,11 +2642,11 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </div>
         </form>
 
-                <h1 id="mesures">Mesures</h1>
+                <h1 id="measurementunits">MeasurementUnits</h1>
 
     
 
-                                <h2 id="mesures-GETmeasures">GET measures</h2>
+                                <h2 id="measurementunits-GETmeasurement-units">GET measurement-units</h2>
 
 <p>
 <small class="badge badge-darkred">requires authentication</small>
@@ -2654,13 +2654,13 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 
 
-<span id="example-requests-GETmeasures">
+<span id="example-requests-GETmeasurement-units">
 <blockquote>Example request:</blockquote>
 
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/measures" \
+    --get "http://localhost/measurement-units" \
     --header "Authorization: Basic Entrez vos identifiants" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -2668,7 +2668,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/measures"
+    "http://localhost/measurement-units"
 );
 
 const headers = {
@@ -2684,7 +2684,7 @@ fetch(url, {
 
 </span>
 
-<span id="example-responses-GETmeasures">
+<span id="example-responses-GETmeasurement-units">
             <blockquote>
             <p>Example response (200):</p>
         </blockquote>
@@ -2712,43 +2712,43 @@ fetch(url, {
 }</code>
  </pre>
     </span>
-<span id="execution-results-GETmeasures" hidden>
+<span id="execution-results-GETmeasurement-units" hidden>
     <blockquote>Received response<span
-                id="execution-response-status-GETmeasures"></span>:
+                id="execution-response-status-GETmeasurement-units"></span>:
     </blockquote>
-    <pre class="json"><code id="execution-response-content-GETmeasures"
+    <pre class="json"><code id="execution-response-content-GETmeasurement-units"
       data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
 </span>
-<span id="execution-error-GETmeasures" hidden>
+<span id="execution-error-GETmeasurement-units" hidden>
     <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETmeasures">
+    <pre><code id="execution-error-message-GETmeasurement-units">
 
 Tip: Check that you&#039;re properly connected to the network.
 If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
 You can check the Dev Tools console for debugging information.</code></pre>
 </span>
-<form id="form-GETmeasures" data-method="GET"
-      data-path="measures"
+<form id="form-GETmeasurement-units" data-method="GET"
+      data-path="measurement-units"
       data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETmeasures', this);">
+      onsubmit="event.preventDefault(); executeTryOut('GETmeasurement-units', this);">
     <h3>
         Request&nbsp;&nbsp;&nbsp;
                     <button type="button"
                     style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETmeasures"
-                    onclick="tryItOut('GETmeasures');">Try it out ⚡
+                    id="btn-tryout-GETmeasurement-units"
+                    onclick="tryItOut('GETmeasurement-units');">Try it out ⚡
             </button>
             <button type="button"
                     style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETmeasures"
-                    onclick="cancelTryOut('GETmeasures');" hidden>Cancel 🛑
+                    id="btn-canceltryout-GETmeasurement-units"
+                    onclick="cancelTryOut('GETmeasurement-units');" hidden>Cancel 🛑
             </button>&nbsp;&nbsp;
             <button type="submit"
                     style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETmeasures"
+                    id="btn-executetryout-GETmeasurement-units"
                     data-initial-text="Send Request 💥"
                     data-loading-text="⏱ Sending..."
                     hidden>Send Request 💥
@@ -2756,7 +2756,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </h3>
             <p>
             <small class="badge badge-green">GET</small>
-            <b><code>measures</code></b>
+            <b><code>measurement-units</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
@@ -2764,7 +2764,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Authorization" class="auth-value"               data-endpoint="GETmeasures"
+                              name="Authorization" class="auth-value"               data-endpoint="GETmeasurement-units"
                value="Basic Entrez vos identifiants"
                data-component="header">
     <br>
@@ -2775,7 +2775,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="GETmeasures"
+                              name="Content-Type"                data-endpoint="GETmeasurement-units"
                value="application/json"
                data-component="header">
     <br>
@@ -2786,7 +2786,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="GETmeasures"
+                              name="Accept"                data-endpoint="GETmeasurement-units"
                value="application/json"
                data-component="header">
     <br>
@@ -2794,11 +2794,11 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                         </form>
 
-                <h1 id="types">Types</h1>
+                <h1 id="placetypes">PlaceTypes</h1>
 
     
 
-                                <h2 id="types-POSTtypes">POST types</h2>
+                                <h2 id="placetypes-GETplace-types">GET place-types</h2>
 
 <p>
 <small class="badge badge-darkred">requires authentication</small>
@@ -2806,13 +2806,13 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 
 
-<span id="example-requests-POSTtypes">
+<span id="example-requests-GETplace-types">
 <blockquote>Example request:</blockquote>
 
 
 <div class="bash-example">
-    <pre><code class="language-bash">curl --request POST \
-    "http://localhost/types" \
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/place-types" \
     --header "Authorization: Basic Entrez vos identifiants" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -2820,7 +2820,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/types"
+    "http://localhost/place-types"
 );
 
 const headers = {
@@ -2830,13 +2830,13 @@ const headers = {
 };
 
 fetch(url, {
-    method: "POST",
+    method: "GET",
     headers,
 }).then(response =&gt; response.json());</code></pre></div>
 
 </span>
 
-<span id="example-responses-POSTtypes">
+<span id="example-responses-GETplace-types">
             <blockquote>
             <p>Example response (200):</p>
         </blockquote>
@@ -2847,65 +2847,65 @@ fetch(url, {
  &quot;data&quot;: [
    {
      &quot;id&quot;: 1,
-     &quot;name&quot;: &quot;L&eacute;gumes&quot;
+     &quot;name&quot;: &quot;Placard&quot;
    },
    {
      &quot;id&quot;: 2,
-     &quot;name&quot;: &quot;Viandes&quot;
+     &quot;name&quot;: &quot;Frigo&quot;
    },
    {
      &quot;id&quot;: 3,
-     &quot;name&quot;: &quot;Fruits&quot;
+     &quot;name&quot;: &quot;Cong&eacute;lateur&quot;
    }
  ]
 }</code>
  </pre>
     </span>
-<span id="execution-results-POSTtypes" hidden>
+<span id="execution-results-GETplace-types" hidden>
     <blockquote>Received response<span
-                id="execution-response-status-POSTtypes"></span>:
+                id="execution-response-status-GETplace-types"></span>:
     </blockquote>
-    <pre class="json"><code id="execution-response-content-POSTtypes"
+    <pre class="json"><code id="execution-response-content-GETplace-types"
       data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
 </span>
-<span id="execution-error-POSTtypes" hidden>
+<span id="execution-error-GETplace-types" hidden>
     <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-POSTtypes">
+    <pre><code id="execution-error-message-GETplace-types">
 
 Tip: Check that you&#039;re properly connected to the network.
 If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
 You can check the Dev Tools console for debugging information.</code></pre>
 </span>
-<form id="form-POSTtypes" data-method="POST"
-      data-path="types"
+<form id="form-GETplace-types" data-method="GET"
+      data-path="place-types"
       data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('POSTtypes', this);">
+      onsubmit="event.preventDefault(); executeTryOut('GETplace-types', this);">
     <h3>
         Request&nbsp;&nbsp;&nbsp;
                     <button type="button"
                     style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-POSTtypes"
-                    onclick="tryItOut('POSTtypes');">Try it out ⚡
+                    id="btn-tryout-GETplace-types"
+                    onclick="tryItOut('GETplace-types');">Try it out ⚡
             </button>
             <button type="button"
                     style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-POSTtypes"
-                    onclick="cancelTryOut('POSTtypes');" hidden>Cancel 🛑
+                    id="btn-canceltryout-GETplace-types"
+                    onclick="cancelTryOut('GETplace-types');" hidden>Cancel 🛑
             </button>&nbsp;&nbsp;
             <button type="submit"
                     style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-POSTtypes"
+                    id="btn-executetryout-GETplace-types"
                     data-initial-text="Send Request 💥"
                     data-loading-text="⏱ Sending..."
                     hidden>Send Request 💥
             </button>
             </h3>
             <p>
-            <small class="badge badge-black">POST</small>
-            <b><code>types</code></b>
+            <small class="badge badge-green">GET</small>
+            <b><code>place-types</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
@@ -2913,7 +2913,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Authorization" class="auth-value"               data-endpoint="POSTtypes"
+                              name="Authorization" class="auth-value"               data-endpoint="GETplace-types"
                value="Basic Entrez vos identifiants"
                data-component="header">
     <br>
@@ -2924,7 +2924,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="POSTtypes"
+                              name="Content-Type"                data-endpoint="GETplace-types"
                value="application/json"
                data-component="header">
     <br>
@@ -2935,7 +2935,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="POSTtypes"
+                              name="Accept"                data-endpoint="GETplace-types"
                value="application/json"
                data-component="header">
     <br>
@@ -3042,7 +3042,7 @@ access-control-allow-headers: Content-Type, Authorization, X-Requested-With
                 &lt;p class=&quot;mt-2 text-gray-500 dark:text-gray-400 text-sm leading-relaxed&quot;&gt;
                     HTTP request received.
 
-                                            Response rendered in 732ms.
+                                            Response rendered in 469ms.
                                     &lt;/p&gt;
             &lt;/div&gt;
         &lt;/div&gt;

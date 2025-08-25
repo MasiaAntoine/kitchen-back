@@ -212,7 +212,7 @@ class ConnectedScaleController extends Controller
                     'label' => $ingredient->label,
                     'quantity' => $ingredient->quantity,
                     'max_quantity' => $ingredient->max_quantity,
-                    'mesure' => $ingredient->measure ? $ingredient->measure->name : null,
+                    'mesure' => $ingredient->measurementUnit ? $ingredient->measurementUnit->name : null,
                 ],
             ]
         ], 200);
@@ -302,7 +302,7 @@ class ConnectedScaleController extends Controller
         $ingredient->quantity = $request->quantity;
         $ingredient->save();
 
-        $ingredient->load(['type', 'measure']);
+        $ingredient->load(['placeType', 'measurementUnit']);
 
         return response()->json([
             'status' => 'success',

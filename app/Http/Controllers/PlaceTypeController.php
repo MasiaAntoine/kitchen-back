@@ -3,40 +3,40 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Type;
+use App\Models\PlaceType;
 
-class TypeController extends Controller
+class PlaceTypeController extends Controller
 {
     /**
-     * @group Types
-     * @title Récupérer tous les types d'ingrédients
-     * @description Cette route permet de récupérer la liste de tous les types d'ingrédients disponibles.
+     * @group PlaceTypes
+     * @title Récupérer tous les types de lieux
+     * @description Cette route permet de récupérer la liste de tous les types de lieux disponibles.
      *
      * @response 200 success {
      *  "status": "success",
      *  "data": [
      *    {
      *      "id": 1,
-     *      "name": "Légumes"
+     *      "name": "Placard"
      *    },
      *    {
      *      "id": 2,
-     *      "name": "Viandes"
+     *      "name": "Frigo"
      *    },
      *    {
      *      "id": 3,
-     *      "name": "Fruits"
+     *      "name": "Congélateur"
      *    }
      *  ]
      * }
      */
     public function index()
     {
-        $types = Type::select('id', 'name')->get();
+        $placeTypes = PlaceType::select('id', 'name')->get();
 
         return response()->json([
             'status' => 'success',
-            'data' => $types
+            'data' => $placeTypes
         ]);
     }
 

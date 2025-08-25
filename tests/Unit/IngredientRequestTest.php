@@ -26,8 +26,8 @@ class IngredientRequestTest extends TestCase
         $rules = $request->rules();
         
         $this->assertArrayHasKey('label', $rules);
-        $this->assertArrayHasKey('type_id', $rules);
-        $this->assertArrayHasKey('measure_id', $rules);
+        $this->assertArrayHasKey('place_type_id', $rules);
+        $this->assertArrayHasKey('measurement_unit_id', $rules);
         $this->assertArrayHasKey('max_quantity', $rules);
         $this->assertArrayHasKey('quantity', $rules);
         $this->assertArrayHasKey('connected_scale_id', $rules);
@@ -39,13 +39,13 @@ class IngredientRequestTest extends TestCase
 
     public function test_ingredient_request_validation_passes_with_valid_data()
     {
-        $type = Type::factory()->create();
-        $measure = Measure::factory()->create();
+        $placeType = PlaceType::factory()->create();
+        $measurementUnit = MeasurementUnit::factory()->create();
         
         $data = [
             'label' => 'Tomate',
-            'type_id' => $type->id,
-            'measure_id' => $measure->id,
+            'place_type_id' => $placeType->id,
+            'measurement_unit_id' => $measurementUnit->id,
             'max_quantity' => 1000,
             'quantity' => 500,
             'connected_scale_id' => null,
@@ -60,8 +60,8 @@ class IngredientRequestTest extends TestCase
     {
         $data = [
             'label' => '',
-            'type_id' => '',
-            'measure_id' => '',
+            'place_type_id' => '',
+            'measurement_unit_id' => '',
             'max_quantity' => '',
         ];
         
@@ -69,54 +69,54 @@ class IngredientRequestTest extends TestCase
         
         $this->assertTrue($validator->fails());
         $this->assertTrue($validator->errors()->has('label'));
-        $this->assertTrue($validator->errors()->has('type_id'));
-        $this->assertTrue($validator->errors()->has('measure_id'));
+        $this->assertTrue($validator->errors()->has('place_type_id'));
+        $this->assertTrue($validator->errors()->has('measurement_unit_id'));
         $this->assertTrue($validator->errors()->has('max_quantity'));
     }
 
-    public function test_ingredient_request_validation_fails_with_invalid_type_id()
+    public function test_ingredient_request_validation_fails_with_invalid_place_type_id()
     {
-        $measure = Measure::factory()->create();
+        $measurementUnit = MeasurementUnit::factory()->create();
         
         $data = [
             'label' => 'Tomate',
-            'type_id' => 99999, // ID inexistant
-            'measure_id' => $measure->id,
+            'place_type_id' => 99999, // ID inexistant
+            'measurement_unit_id' => $measurementUnit->id,
             'max_quantity' => 1000,
         ];
         
         $validator = Validator::make($data, (new IngredientRequest())->rules());
         
         $this->assertTrue($validator->fails());
-        $this->assertTrue($validator->errors()->has('type_id'));
+        $this->assertTrue($validator->errors()->has('place_type_id'));
     }
 
-    public function test_ingredient_request_validation_fails_with_invalid_measure_id()
+    public function test_ingredient_request_validation_fails_with_invalid_measurement_unit_id()
     {
-        $type = Type::factory()->create();
+        $placeType = PlaceType::factory()->create();
         
         $data = [
             'label' => 'Tomate',
-            'type_id' => $type->id,
-            'measure_id' => 99999, // ID inexistant
+            'place_type_id' => $placeType->id,
+            'measurement_unit_id' => 99999, // ID inexistant
             'max_quantity' => 1000,
         ];
         
         $validator = Validator::make($data, (new IngredientRequest())->rules());
         
         $this->assertTrue($validator->fails());
-        $this->assertTrue($validator->errors()->has('measure_id'));
+        $this->assertTrue($validator->errors()->has('measurement_unit_id'));
     }
 
     public function test_ingredient_request_validation_fails_with_negative_quantity()
     {
-        $type = Type::factory()->create();
-        $measure = Measure::factory()->create();
+        $placeType = PlaceType::factory()->create();
+        $measurementUnit = MeasurementUnit::factory()->create();
         
         $data = [
             'label' => 'Tomate',
-            'type_id' => $type->id,
-            'measure_id' => $measure->id,
+            'place_type_id' => $placeType->id,
+            'measurement_unit_id' => $measurementUnit->id,
             'max_quantity' => -100,
             'quantity' => -50,
         ];
@@ -134,13 +134,13 @@ class IngredientRequestTest extends TestCase
         $messages = $request->messages();
         
         $this->assertArrayHasKey('label.required', $messages);
-        $this->assertArrayHasKey('type_id.required', $messages);
-        $this->assertArrayHasKey('type_id.exists', $messages);
+        $this->assertArrayHasKey('place_type_id.required', $messages);
+        $this->assertArrayHasKey('place_type_id.exists', $messages);
         $this->assertArrayHasKey('max_quantity.required', $messages);
-        $this->assertArrayHasKey('measure_id.required', $messages);
-        $this->assertArrayHasKey('measure_id.exists', $messages);
+        $this->assertArrayHasKey('measurement_unit_id.required', $messages);
+        $this->assertArrayHasKey('measurement_unit_id.exists', $messages);
         
         $this->assertEquals('Le nom de l\'ingrédient est obligatoire', $messages['label.required']);
-        $this->assertEquals('Le type de stockage est obligatoire', $messages['type_id.required']);
+        $this->assertEquals('Le type de stockage est obligatoire', $messages['place_type_id.required']);
     }
 }

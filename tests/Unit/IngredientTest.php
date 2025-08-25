@@ -3,8 +3,8 @@
 namespace Tests\Unit;
 
 use App\Models\Ingredient;
-use App\Models\Type;
-use App\Models\Measure;
+use App\Models\PlaceType;
+use App\Models\MeasurementUnit;
 use App\Models\ConnectedScale;
 use Tests\TestCase;
 use Tests\Traits\ConfigureSqliteDatabase;
@@ -15,13 +15,13 @@ class IngredientTest extends TestCase
 
     public function test_ingredient_can_be_created_with_valid_data()
     {
-        $type = Type::factory()->create();
-        $measure = Measure::factory()->create();
+        $placeType = PlaceType::factory()->create();
+        $measurementUnit = MeasurementUnit::factory()->create();
         
         $ingredient = Ingredient::create([
             'label' => 'Tomate',
-            'type_id' => $type->id,
-            'measure_id' => $measure->id,
+            'place_type_id' => $placeType->id,
+            'measurement_unit_id' => $measurementUnit->id,
             'quantity' => 500,
             'max_quantity' => 1000,
         ]);
@@ -34,48 +34,48 @@ class IngredientTest extends TestCase
 
     public function test_ingredient_has_type_relationship()
     {
-        $type = Type::factory()->create();
-        $measure = Measure::factory()->create();
+        $placeType = PlaceType::factory()->create();
+        $measurementUnit = MeasurementUnit::factory()->create();
         
         $ingredient = Ingredient::create([
             'label' => 'Poulet',
-            'type_id' => $type->id,
-            'measure_id' => $measure->id,
+            'place_type_id' => $placeType->id,
+            'measurement_unit_id' => $measurementUnit->id,
             'quantity' => 1000,
             'max_quantity' => 2000,
         ]);
 
-        $this->assertInstanceOf(Type::class, $ingredient->type);
-        $this->assertEquals($type->id, $ingredient->type->id);
+        $this->assertInstanceOf(PlaceType::class, $ingredient->placeType);
+        $this->assertEquals($placeType->id, $ingredient->placeType->id);
     }
 
     public function test_ingredient_has_measure_relationship()
     {
-        $type = Type::factory()->create();
-        $measure = Measure::factory()->create();
+        $placeType = PlaceType::factory()->create();
+        $measurementUnit = MeasurementUnit::factory()->create();
         
         $ingredient = Ingredient::create([
             'label' => 'Farine',
-            'type_id' => $type->id,
-            'measure_id' => $measure->id,
+            'place_type_id' => $placeType->id,
+            'measurement_unit_id' => $measurementUnit->id,
             'quantity' => 800,
             'max_quantity' => 1500,
         ]);
 
-        $this->assertInstanceOf(Measure::class, $ingredient->measure);
-        $this->assertEquals($measure->id, $ingredient->measure->id);
+        $this->assertInstanceOf(MeasurementUnit::class, $ingredient->measurementUnit);
+        $this->assertEquals($measurementUnit->id, $ingredient->measurementUnit->id);
     }
 
     public function test_ingredient_has_connected_scale_relationship()
     {
-        $type = Type::factory()->create();
-        $measure = Measure::factory()->create();
+        $placeType = PlaceType::factory()->create();
+        $measurementUnit = MeasurementUnit::factory()->create();
         $connectedScale = ConnectedScale::factory()->create();
         
         $ingredient = Ingredient::create([
             'label' => 'Lait',
-            'type_id' => $type->id,
-            'measure_id' => $measure->id,
+            'place_type_id' => $placeType->id,
+            'measurement_unit_id' => $measurementUnit->id,
             'connected_scale_id' => $connectedScale->id,
             'quantity' => 600,
             'max_quantity' => 1000,
@@ -87,14 +87,14 @@ class IngredientTest extends TestCase
 
     public function test_is_connected_attribute_returns_true_when_connected_scale_id_exists()
     {
-        $type = Type::factory()->create();
-        $measure = Measure::factory()->create();
+        $placeType = PlaceType::factory()->create();
+        $measurementUnit = MeasurementUnit::factory()->create();
         $connectedScale = ConnectedScale::factory()->create();
         
         $ingredient = Ingredient::create([
             'label' => 'Oeufs',
-            'type_id' => $type->id,
-            'measure_id' => $measure->id,
+            'place_type_id' => $placeType->id,
+            'measurement_unit_id' => $measurementUnit->id,
             'connected_scale_id' => $connectedScale->id,
             'quantity' => 12,
             'max_quantity' => 24,
@@ -105,13 +105,13 @@ class IngredientTest extends TestCase
 
     public function test_is_connected_attribute_returns_false_when_balance_id_is_null()
     {
-        $type = Type::factory()->create();
-        $measure = Measure::factory()->create();
+        $placeType = PlaceType::factory()->create();
+        $measurementUnit = MeasurementUnit::factory()->create();
         
         $ingredient = Ingredient::create([
             'label' => 'Sel',
-            'type_id' => $type->id,
-            'measure_id' => $measure->id,
+            'place_type_id' => $placeType->id,
+            'measurement_unit_id' => $measurementUnit->id,
             'quantity' => 100,
             'max_quantity' => 500,
         ]);
@@ -121,13 +121,13 @@ class IngredientTest extends TestCase
 
     public function test_ingredient_quantity_is_casted_to_float()
     {
-        $type = Type::factory()->create();
-        $measure = Measure::factory()->create();
+        $placeType = PlaceType::factory()->create();
+        $measurementUnit = MeasurementUnit::factory()->create();
         
         $ingredient = Ingredient::create([
             'label' => 'Sucre',
-            'type_id' => $type->id,
-            'measure_id' => $measure->id,
+            'place_type_id' => $placeType->id,
+            'measurement_unit_id' => $measurementUnit->id,
             'quantity' => 250.5,
             'max_quantity' => 1000.0,
         ]);

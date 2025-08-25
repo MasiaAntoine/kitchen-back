@@ -20,17 +20,17 @@ class IngredientResource extends JsonResource
             'quantity' => $this->quantity,
             'max_quantity' => $this->max_quantity,
             'connected_scale_id' => $this->connected_scale_id,
-            'type' => $this->whenLoaded('type', function () {
+            'place_type' => $this->whenLoaded('placeType', function () {
                 return [
-                    'id' => $this->type->id,
-                    'name' => $this->type->name,
+                    'id' => $this->placeType->id,
+                    'name' => $this->placeType->name,
                 ];
             }),
-            'measure' => $this->whenLoaded('measure', function () {
+            'measurement_unit' => $this->whenLoaded('measurementUnit', function () {
                 return [
-                    'id' => $this->measure->id,
-                    'name' => $this->measure->name,
-                    'symbol' => $this->measure->symbol,
+                    'id' => $this->measurementUnit->id,
+                    'name' => $this->measurementUnit->name,
+                    'symbol' => $this->measurementUnit->symbol,
                 ];
             }),
         ];
