@@ -23,7 +23,7 @@ class IngredientRequest extends FormRequest
     {
         return [
             'label' => 'required|string|max:255',
-            'balance_id' => 'nullable|string|max:255',
+            'connected_scale_id' => 'nullable|integer|exists:connected_scales,id',
             'type_id' => 'required|exists:types,id',
             'quantity' => 'numeric|min:0',
             'max_quantity' => 'required|numeric|min:0',

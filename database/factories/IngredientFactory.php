@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Type;
 use App\Models\Measure;
-use App\Models\Balance;
+use App\Models\ConnectedScale;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -23,7 +23,7 @@ class IngredientFactory extends Factory
             'label' => fake()->words(2, true),
             'type_id' => Type::factory(),
             'measure_id' => Measure::factory(),
-            'balance_id' => null,
+            'connected_scale_id' => null,
             'quantity' => fake()->randomFloat(2, 0, 1000),
             'max_quantity' => fake()->randomFloat(2, 100, 2000),
         ];
@@ -35,7 +35,7 @@ class IngredientFactory extends Factory
     public function connected(): static
     {
         return $this->state(fn (array $attributes) => [
-            'balance_id' => Balance::factory(),
+            'connected_scale_id' => ConnectedScale::factory(),
         ]);
     }
 

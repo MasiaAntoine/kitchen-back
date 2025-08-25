@@ -6,7 +6,7 @@ use App\Http\Controllers\TypeController;
 use App\Http\Controllers\MeasureController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\BasicAuthMiddleware;
-use App\Http\Controllers\BalanceController;
+use App\Http\Controllers\ConnectedScaleController;
 
 Route::post('/login', [AuthController::class, 'login']);
 
@@ -34,14 +34,14 @@ Route::middleware([BasicAuthMiddleware::class])->group(function () {
         Route::get('/', [MeasureController::class, 'index']);
     });
 
-    Route::prefix('balances')->group(function () {
-        Route::get('/', [BalanceController::class, 'index']);
-        Route::post('/{balance_id}/associate', [BalanceController::class, 'associateWithIngredient']);
-        Route::delete('/', [BalanceController::class, 'destroyByMac']);
+    Route::prefix('connected-scales')->group(function () {
+        Route::get('/', [ConnectedScaleController::class, 'index']);
+        Route::post('/{connected_scale_id}/associate', [ConnectedScaleController::class, 'associateWithIngredient']);
+        Route::delete('/', [ConnectedScaleController::class, 'destroyByMac']);
 
         Route::prefix('reserved-machine')->group(function () {
-            Route::post('/', [BalanceController::class, 'store']);
-            Route::post('/update-quantity', [BalanceController::class, 'updateQuantityByMac']);
+            Route::post('/', [ConnectedScaleController::class, 'store']);
+            Route::post('/update-quantity', [ConnectedScaleController::class, 'updateQuantityByMac']);
         });
     });
 });

@@ -30,9 +30,9 @@
         var useCsrf = Boolean();
         var csrfUrl = "/sanctum/csrf-cookie";
     </script>
-    <script src="{{ asset("/vendor/scribe/js/tryitout-5.2.0.js") }}"></script>
+    <script src="{{ asset("/vendor/scribe/js/tryitout-5.3.0.js") }}"></script>
 
-    <script src="{{ asset("/vendor/scribe/js/theme-default-5.2.0.js") }}"></script>
+    <script src="{{ asset("/vendor/scribe/js/theme-default-5.3.0.js") }}"></script>
 
 </head>
 
@@ -76,6 +76,28 @@
                             </li>
                                                                         </ul>
                             </ul>
+                    <ul id="tocify-header-connectedscales" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="connectedscales">
+                    <a href="#connectedscales">ConnectedScales</a>
+                </li>
+                                    <ul id="tocify-subheader-connectedscales" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="connectedscales-GETconnected-scales">
+                                <a href="#connectedscales-GETconnected-scales">GET connected-scales</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="connectedscales-POSTconnected-scales--connected_scale_id--associate">
+                                <a href="#connectedscales-POSTconnected-scales--connected_scale_id--associate">POST connected-scales/{connected_scale_id}/associate</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="connectedscales-DELETEconnected-scales">
+                                <a href="#connectedscales-DELETEconnected-scales">DELETE connected-scales</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="connectedscales-POSTconnected-scales-reserved-machine">
+                                <a href="#connectedscales-POSTconnected-scales-reserved-machine">POST connected-scales/reserved-machine</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="connectedscales-POSTconnected-scales-reserved-machine-update-quantity">
+                                <a href="#connectedscales-POSTconnected-scales-reserved-machine-update-quantity">POST connected-scales/reserved-machine/update-quantity</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
                     <ul id="tocify-header-ingredients" class="tocify-header">
                 <li class="tocify-item level-1" data-unique="ingredients">
                     <a href="#ingredients">Ingredients</a>
@@ -83,6 +105,9 @@
                                     <ul id="tocify-subheader-ingredients" class="tocify-subheader">
                                                     <li class="tocify-item level-2" data-unique="ingredients-GETingredients">
                                 <a href="#ingredients-GETingredients">GET ingredients</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="ingredients-POSTingredients">
+                                <a href="#ingredients-POSTingredients">POST ingredients</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="ingredients-GETingredients-by-type">
                                 <a href="#ingredients-GETingredients-by-type">GET ingredients/by-type</a>
@@ -92,9 +117,6 @@
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="ingredients-GETingredients-connected">
                                 <a href="#ingredients-GETingredients-connected">GET ingredients/connected</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="ingredients-POSTingredients">
-                                <a href="#ingredients-POSTingredients">POST ingredients</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="ingredients-DELETEingredients-batch">
                                 <a href="#ingredients-DELETEingredients-batch">DELETE ingredients/batch</a>
@@ -122,8 +144,8 @@
                     <a href="#types">Types</a>
                 </li>
                                     <ul id="tocify-subheader-types" class="tocify-subheader">
-                                                    <li class="tocify-item level-2" data-unique="types-GETtypes">
-                                <a href="#types-GETtypes">GET types</a>
+                                                    <li class="tocify-item level-2" data-unique="types-POSTtypes">
+                                <a href="#types-POSTtypes">POST types</a>
                             </li>
                                                                         </ul>
                             </ul>
@@ -149,7 +171,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: May 10, 2025</li>
+        <li>Last updated: August 25, 2025</li>
     </ul>
 </div>
 
@@ -353,6 +375,926 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </div>
         </form>
 
+                <h1 id="connectedscales">ConnectedScales</h1>
+
+    
+
+                                <h2 id="connectedscales-GETconnected-scales">GET connected-scales</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-GETconnected-scales">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/connected-scales" \
+    --header "Authorization: Basic Entrez vos identifiants" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/connected-scales"
+);
+
+const headers = {
+    "Authorization": "Basic Entrez vos identifiants",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETconnected-scales">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">success {
+ &quot;data&quot;: [
+   {
+     &quot;id&quot;: 1,
+     &quot;mac_address&quot;: &quot;00:11:22:33:44:55&quot;,
+     &quot;name&quot;: &quot;Balance cuisine&quot;,
+     &quot;is_online&quot;: true,
+   },
+   {
+     &quot;id&quot;: 2,
+     &quot;mac_address&quot;: &quot;AA:BB:CC:DD:EE:FF&quot;,
+     &quot;name&quot;: &quot;Balance salle de bain&quot;,
+     &quot;is_online&quot;: false,
+   }
+ ]
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETconnected-scales" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETconnected-scales"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETconnected-scales"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETconnected-scales" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETconnected-scales">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETconnected-scales" data-method="GET"
+      data-path="connected-scales"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETconnected-scales', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETconnected-scales"
+                    onclick="tryItOut('GETconnected-scales');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETconnected-scales"
+                    onclick="cancelTryOut('GETconnected-scales');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETconnected-scales"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>connected-scales</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETconnected-scales"
+               value="Basic Entrez vos identifiants"
+               data-component="header">
+    <br>
+<p>Example: <code>Basic Entrez vos identifiants</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETconnected-scales"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETconnected-scales"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
+                    <h2 id="connectedscales-POSTconnected-scales--connected_scale_id--associate">POST connected-scales/{connected_scale_id}/associate</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-POSTconnected-scales--connected_scale_id--associate">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost/connected-scales/1/associate" \
+    --header "Authorization: Basic Entrez vos identifiants" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"ingredient_id\": 3
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/connected-scales/1/associate"
+);
+
+const headers = {
+    "Authorization": "Basic Entrez vos identifiants",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "ingredient_id": 3
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTconnected-scales--connected_scale_id--associate">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">success {
+ &quot;status&quot;: &quot;success&quot;,
+ &quot;message&quot;: &quot;Balance associ&eacute;e avec succ&egrave;s &agrave; l&#039;ingr&eacute;dient&quot;,
+ &quot;data&quot;: {
+   &quot;connected_scale&quot;: {
+     &quot;id&quot;: 1,
+     &quot;mac_address&quot;: &quot;00:11:22:33:44:55&quot;,
+     &quot;name&quot;: &quot;Balance cuisine&quot;
+   },
+   &quot;ingredient&quot;: {
+     &quot;id&quot;: 3,
+     &quot;label&quot;: &quot;Farine&quot;,
+     &quot;quantity&quot;: 500,
+     &quot;max_quantity&quot;: 1000,
+     &quot;mesure&quot;: &quot;Grammes&quot;
+   }
+ }
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (404):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">not_found {
+ &quot;message&quot;: &quot;Balance ou ingr&eacute;dient non trouv&eacute;&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (422):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">already_associated {
+ &quot;message&quot;: &quot;Cette balance est d&eacute;j&agrave; associ&eacute;e &agrave; un autre ingr&eacute;dient&quot;,
+ &quot;ingredient&quot;: {
+   &quot;id&quot;: 5,
+   &quot;label&quot;: &quot;Sucre&quot;
+ }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTconnected-scales--connected_scale_id--associate" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTconnected-scales--connected_scale_id--associate"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTconnected-scales--connected_scale_id--associate"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTconnected-scales--connected_scale_id--associate" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTconnected-scales--connected_scale_id--associate">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTconnected-scales--connected_scale_id--associate" data-method="POST"
+      data-path="connected-scales/{connected_scale_id}/associate"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTconnected-scales--connected_scale_id--associate', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTconnected-scales--connected_scale_id--associate"
+                    onclick="tryItOut('POSTconnected-scales--connected_scale_id--associate');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTconnected-scales--connected_scale_id--associate"
+                    onclick="cancelTryOut('POSTconnected-scales--connected_scale_id--associate');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTconnected-scales--connected_scale_id--associate"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>connected-scales/{connected_scale_id}/associate</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTconnected-scales--connected_scale_id--associate"
+               value="Basic Entrez vos identifiants"
+               data-component="header">
+    <br>
+<p>Example: <code>Basic Entrez vos identifiants</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTconnected-scales--connected_scale_id--associate"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTconnected-scales--connected_scale_id--associate"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>connected_scale_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="connected_scale_id"                data-endpoint="POSTconnected-scales--connected_scale_id--associate"
+               value="1"
+               data-component="url">
+    <br>
+<p>L'identifiant de la balance à associer. Example: <code>1</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>ingredient_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="ingredient_id"                data-endpoint="POSTconnected-scales--connected_scale_id--associate"
+               value="3"
+               data-component="body">
+    <br>
+<p>L'identifiant de l'ingrédient à associer à la balance. Example: <code>3</code></p>
+        </div>
+        </form>
+
+                    <h2 id="connectedscales-DELETEconnected-scales">DELETE connected-scales</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-DELETEconnected-scales">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request DELETE \
+    "http://localhost/connected-scales" \
+    --header "Authorization: Basic Entrez vos identifiants" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"mac_address\": \"00:11:22:33:44:55\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/connected-scales"
+);
+
+const headers = {
+    "Authorization": "Basic Entrez vos identifiants",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "mac_address": "00:11:22:33:44:55"
+};
+
+fetch(url, {
+    method: "DELETE",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-DELETEconnected-scales">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">success {
+ &quot;status&quot;: &quot;success&quot;,
+ &quot;message&quot;: &quot;Balance supprim&eacute;e avec succ&egrave;s&quot;,
+ &quot;data&quot;: {
+   &quot;mac_address&quot;: &quot;00:11:22:33:44:55&quot;,
+   &quot;name&quot;: &quot;Balance cuisine&quot;
+ }
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (404):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">balance_not_found {
+ &quot;message&quot;: &quot;Balance non trouv&eacute;e avec cette adresse MAC&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (422):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">validation_error {
+ &quot;message&quot;: &quot;Le champ adresse MAC est obligatoire&quot;,
+ &quot;errors&quot;: {
+   &quot;mac_address&quot;: [
+     &quot;Le champ adresse MAC est obligatoire&quot;
+   ]
+ }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-DELETEconnected-scales" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-DELETEconnected-scales"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-DELETEconnected-scales"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-DELETEconnected-scales" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-DELETEconnected-scales">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-DELETEconnected-scales" data-method="DELETE"
+      data-path="connected-scales"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('DELETEconnected-scales', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-DELETEconnected-scales"
+                    onclick="tryItOut('DELETEconnected-scales');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-DELETEconnected-scales"
+                    onclick="cancelTryOut('DELETEconnected-scales');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-DELETEconnected-scales"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-red">DELETE</small>
+            <b><code>connected-scales</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="DELETEconnected-scales"
+               value="Basic Entrez vos identifiants"
+               data-component="header">
+    <br>
+<p>Example: <code>Basic Entrez vos identifiants</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="DELETEconnected-scales"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="DELETEconnected-scales"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>mac_address</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="mac_address"                data-endpoint="DELETEconnected-scales"
+               value="00:11:22:33:44:55"
+               data-component="body">
+    <br>
+<p>L'adresse MAC de la balance à supprimer. Example: <code>00:11:22:33:44:55</code></p>
+        </div>
+        </form>
+
+                    <h2 id="connectedscales-POSTconnected-scales-reserved-machine">POST connected-scales/reserved-machine</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-POSTconnected-scales-reserved-machine">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost/connected-scales/reserved-machine" \
+    --header "Authorization: Basic Entrez vos identifiants" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"mac_address\": \"00:11:22:33:44:55\",
+    \"name\": \"Balance cuisine\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/connected-scales/reserved-machine"
+);
+
+const headers = {
+    "Authorization": "Basic Entrez vos identifiants",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "mac_address": "00:11:22:33:44:55",
+    "name": "Balance cuisine"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTconnected-scales-reserved-machine">
+            <blockquote>
+            <p>Example response (201):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">success {
+ &quot;data&quot;: {
+   &quot;id&quot;: 3,
+   &quot;mac_address&quot;: &quot;00:11:22:33:44:55&quot;,
+   &quot;name&quot;: &quot;Balance cuisine&quot;,
+   &quot;is_online&quot;: false,
+   &quot;last_update&quot;: null
+ },
+ &quot;message&quot;: &quot;Balance cr&eacute;&eacute;e avec succ&egrave;s&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (422):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">validation_error {
+ &quot;message&quot;: &quot;Le champ adresse MAC est obligatoire&quot;,
+ &quot;errors&quot;: {
+   &quot;mac_address&quot;: [
+     &quot;Le champ adresse MAC est obligatoire&quot;
+   ]
+ }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTconnected-scales-reserved-machine" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTconnected-scales-reserved-machine"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTconnected-scales-reserved-machine"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTconnected-scales-reserved-machine" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTconnected-scales-reserved-machine">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTconnected-scales-reserved-machine" data-method="POST"
+      data-path="connected-scales/reserved-machine"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTconnected-scales-reserved-machine', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTconnected-scales-reserved-machine"
+                    onclick="tryItOut('POSTconnected-scales-reserved-machine');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTconnected-scales-reserved-machine"
+                    onclick="cancelTryOut('POSTconnected-scales-reserved-machine');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTconnected-scales-reserved-machine"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>connected-scales/reserved-machine</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTconnected-scales-reserved-machine"
+               value="Basic Entrez vos identifiants"
+               data-component="header">
+    <br>
+<p>Example: <code>Basic Entrez vos identifiants</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTconnected-scales-reserved-machine"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTconnected-scales-reserved-machine"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>mac_address</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="mac_address"                data-endpoint="POSTconnected-scales-reserved-machine"
+               value="00:11:22:33:44:55"
+               data-component="body">
+    <br>
+<p>L'adresse MAC de la balance. Example: <code>00:11:22:33:44:55</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>name</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="name"                data-endpoint="POSTconnected-scales-reserved-machine"
+               value="Balance cuisine"
+               data-component="body">
+    <br>
+<p>Le nom de la balance. Example: <code>Balance cuisine</code></p>
+        </div>
+        </form>
+
+                    <h2 id="connectedscales-POSTconnected-scales-reserved-machine-update-quantity">POST connected-scales/reserved-machine/update-quantity</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-POSTconnected-scales-reserved-machine-update-quantity">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost/connected-scales/reserved-machine/update-quantity" \
+    --header "Authorization: Basic Entrez vos identifiants" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"mac_address\": \"00:11:22:33:44:55\",
+    \"quantity\": \"750\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/connected-scales/reserved-machine/update-quantity"
+);
+
+const headers = {
+    "Authorization": "Basic Entrez vos identifiants",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "mac_address": "00:11:22:33:44:55",
+    "quantity": "750"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTconnected-scales-reserved-machine-update-quantity">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">success {
+ &quot;status&quot;: &quot;success&quot;,
+ &quot;message&quot;: &quot;Quantit&eacute; mise &agrave; jour avec succ&egrave;s&quot;,
+ &quot;data&quot;: {
+   &quot;id&quot;: 3,
+   &quot;label&quot;: &quot;Farine&quot;,
+   &quot;quantity&quot;: 750,
+   &quot;max_quantity&quot;: 1000,
+   &quot;mesure&quot;: &quot;Grammes&quot;
+ }
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (404):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">balance_not_found {
+ &quot;message&quot;: &quot;Balance non trouv&eacute;e avec cette adresse MAC&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (404):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">ingredient_not_found {
+ &quot;message&quot;: &quot;Aucun ingr&eacute;dient n&#039;est associ&eacute; &agrave; cette balance&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (422):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">validation_error {
+ &quot;message&quot;: &quot;Le champ adresse MAC est obligatoire&quot;,
+ &quot;errors&quot;: {
+   &quot;mac_address&quot;: [
+     &quot;Le champ adresse MAC est obligatoire&quot;
+   ]
+ }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTconnected-scales-reserved-machine-update-quantity" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTconnected-scales-reserved-machine-update-quantity"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTconnected-scales-reserved-machine-update-quantity"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTconnected-scales-reserved-machine-update-quantity" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTconnected-scales-reserved-machine-update-quantity">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTconnected-scales-reserved-machine-update-quantity" data-method="POST"
+      data-path="connected-scales/reserved-machine/update-quantity"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTconnected-scales-reserved-machine-update-quantity', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTconnected-scales-reserved-machine-update-quantity"
+                    onclick="tryItOut('POSTconnected-scales-reserved-machine-update-quantity');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTconnected-scales-reserved-machine-update-quantity"
+                    onclick="cancelTryOut('POSTconnected-scales-reserved-machine-update-quantity');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTconnected-scales-reserved-machine-update-quantity"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>connected-scales/reserved-machine/update-quantity</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTconnected-scales-reserved-machine-update-quantity"
+               value="Basic Entrez vos identifiants"
+               data-component="header">
+    <br>
+<p>Example: <code>Basic Entrez vos identifiants</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTconnected-scales-reserved-machine-update-quantity"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTconnected-scales-reserved-machine-update-quantity"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>mac_address</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="mac_address"                data-endpoint="POSTconnected-scales-reserved-machine-update-quantity"
+               value="00:11:22:33:44:55"
+               data-component="body">
+    <br>
+<p>L'adresse MAC de la balance. Example: <code>00:11:22:33:44:55</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>quantity</code></b>&nbsp;&nbsp;
+<small>numeric</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="quantity"                data-endpoint="POSTconnected-scales-reserved-machine-update-quantity"
+               value="750"
+               data-component="body">
+    <br>
+<p>La nouvelle quantité à définir. Example: <code>750</code></p>
+        </div>
+        </form>
+
                 <h1 id="ingredients">Ingredients</h1>
 
     
@@ -495,6 +1437,254 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>Example: <code>application/json</code></p>
             </div>
                         </form>
+
+                    <h2 id="ingredients-POSTingredients">POST ingredients</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-POSTingredients">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost/ingredients" \
+    --header "Authorization: Basic Entrez vos identifiants" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"label\": \"Courgette\",
+    \"connected_scale_id\": 16,
+    \"type_id\": 1,
+    \"measure_id\": 1,
+    \"max_quantity\": \"1000\",
+    \"is_connected\": false
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/ingredients"
+);
+
+const headers = {
+    "Authorization": "Basic Entrez vos identifiants",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "label": "Courgette",
+    "connected_scale_id": 16,
+    "type_id": 1,
+    "measure_id": 1,
+    "max_quantity": "1000",
+    "is_connected": false
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTingredients">
+            <blockquote>
+            <p>Example response (201):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">success {
+ &quot;status&quot;: &quot;success&quot;,
+ &quot;message&quot;: &quot;Ingr&eacute;dient cr&eacute;&eacute; avec succ&egrave;s&quot;,
+ &quot;data&quot;: {
+   &quot;id&quot;: 5,
+   &quot;label&quot;: &quot;Courgette&quot;,
+   &quot;quantity&quot;: 0,
+   &quot;max_quantity&quot;: 1000,
+   &quot;mesure&quot;: &quot;Grammes&quot;
+ }
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (422):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">validation_error {
+ &quot;message&quot;: &quot;The given data was invalid.&quot;,
+ &quot;errors&quot;: {
+   &quot;label&quot;: [&quot;Le champ label est obligatoire.&quot;],
+   &quot;type_id&quot;: [&quot;Le champ type_id doit &ecirc;tre un identifiant existant dans la table types.&quot;]
+ }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTingredients" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTingredients"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTingredients"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTingredients" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTingredients">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTingredients" data-method="POST"
+      data-path="ingredients"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTingredients', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTingredients"
+                    onclick="tryItOut('POSTingredients');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTingredients"
+                    onclick="cancelTryOut('POSTingredients');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTingredients"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>ingredients</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTingredients"
+               value="Basic Entrez vos identifiants"
+               data-component="header">
+    <br>
+<p>Example: <code>Basic Entrez vos identifiants</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTingredients"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTingredients"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>label</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="label"                data-endpoint="POSTingredients"
+               value="Courgette"
+               data-component="body">
+    <br>
+<p>Le nom de l'ingrédient. Example: <code>Courgette</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>connected_scale_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="connected_scale_id"                data-endpoint="POSTingredients"
+               value="16"
+               data-component="body">
+    <br>
+<p>The <code>id</code> of an existing record in the connected_scales table. Example: <code>16</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>type_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="type_id"                data-endpoint="POSTingredients"
+               value="1"
+               data-component="body">
+    <br>
+<p>L'identifiant du type d'ingrédient. Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>measure_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="measure_id"                data-endpoint="POSTingredients"
+               value="1"
+               data-component="body">
+    <br>
+<p>L'identifiant de l'unité de mesure. Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>max_quantity</code></b>&nbsp;&nbsp;
+<small>numeric</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="max_quantity"                data-endpoint="POSTingredients"
+               value="1000"
+               data-component="body">
+    <br>
+<p>La quantité maximale de l'ingrédient. Example: <code>1000</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>is_connected</code></b>&nbsp;&nbsp;
+<small>boolean</small>&nbsp;
+<i>optional</i> &nbsp;
+                <label data-endpoint="POSTingredients" style="display: none">
+            <input type="radio" name="is_connected"
+                   value="true"
+                   data-endpoint="POSTingredients"
+                   data-component="body"             >
+            <code>true</code>
+        </label>
+        <label data-endpoint="POSTingredients" style="display: none">
+            <input type="radio" name="is_connected"
+                   value="false"
+                   data-endpoint="POSTingredients"
+                   data-component="body"             >
+            <code>false</code>
+        </label>
+    <br>
+<p>Indique si l'ingrédient est connecté à un capteur. Example: <code>false</code></p>
+        </div>
+        </form>
 
                     <h2 id="ingredients-GETingredients-by-type">GET ingredients/by-type</h2>
 
@@ -941,254 +2131,6 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>Example: <code>application/json</code></p>
             </div>
                         </form>
-
-                    <h2 id="ingredients-POSTingredients">POST ingredients</h2>
-
-<p>
-<small class="badge badge-darkred">requires authentication</small>
-</p>
-
-
-
-<span id="example-requests-POSTingredients">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request POST \
-    "http://localhost/ingredients" \
-    --header "Authorization: Basic Entrez vos identifiants" \
-    --header "Content-Type: application/json" \
-    --header "Accept: application/json" \
-    --data "{
-    \"label\": \"Courgette\",
-    \"balance_id\": \"n\",
-    \"type_id\": 1,
-    \"measure_id\": 1,
-    \"max_quantity\": \"1000\",
-    \"is_connected\": false
-}"
-</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/ingredients"
-);
-
-const headers = {
-    "Authorization": "Basic Entrez vos identifiants",
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-let body = {
-    "label": "Courgette",
-    "balance_id": "n",
-    "type_id": 1,
-    "measure_id": 1,
-    "max_quantity": "1000",
-    "is_connected": false
-};
-
-fetch(url, {
-    method: "POST",
-    headers,
-    body: JSON.stringify(body),
-}).then(response =&gt; response.json());</code></pre></div>
-
-</span>
-
-<span id="example-responses-POSTingredients">
-            <blockquote>
-            <p>Example response (201):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">success {
- &quot;status&quot;: &quot;success&quot;,
- &quot;message&quot;: &quot;Ingr&eacute;dient cr&eacute;&eacute; avec succ&egrave;s&quot;,
- &quot;data&quot;: {
-   &quot;id&quot;: 5,
-   &quot;label&quot;: &quot;Courgette&quot;,
-   &quot;quantity&quot;: 0,
-   &quot;max_quantity&quot;: 1000,
-   &quot;mesure&quot;: &quot;Grammes&quot;
- }
-}</code>
- </pre>
-            <blockquote>
-            <p>Example response (422):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">validation_error {
- &quot;message&quot;: &quot;The given data was invalid.&quot;,
- &quot;errors&quot;: {
-   &quot;label&quot;: [&quot;Le champ label est obligatoire.&quot;],
-   &quot;type_id&quot;: [&quot;Le champ type_id doit &ecirc;tre un identifiant existant dans la table types.&quot;]
- }
-}</code>
- </pre>
-    </span>
-<span id="execution-results-POSTingredients" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-POSTingredients"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-POSTingredients"
-      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-POSTingredients" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-POSTingredients">
-
-Tip: Check that you&#039;re properly connected to the network.
-If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
-You can check the Dev Tools console for debugging information.</code></pre>
-</span>
-<form id="form-POSTingredients" data-method="POST"
-      data-path="ingredients"
-      data-authed="1"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('POSTingredients', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-POSTingredients"
-                    onclick="tryItOut('POSTingredients');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-POSTingredients"
-                    onclick="cancelTryOut('POSTingredients');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-POSTingredients"
-                    data-initial-text="Send Request 💥"
-                    data-loading-text="⏱ Sending..."
-                    hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-black">POST</small>
-            <b><code>ingredients</code></b>
-        </p>
-                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Authorization" class="auth-value"               data-endpoint="POSTingredients"
-               value="Basic Entrez vos identifiants"
-               data-component="header">
-    <br>
-<p>Example: <code>Basic Entrez vos identifiants</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="POSTingredients"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="POSTingredients"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
-        <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>label</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="label"                data-endpoint="POSTingredients"
-               value="Courgette"
-               data-component="body">
-    <br>
-<p>Le nom de l'ingrédient. Example: <code>Courgette</code></p>
-        </div>
-                <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>balance_id</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
-<i>optional</i> &nbsp;
-                <input type="text" style="display: none"
-                              name="balance_id"                data-endpoint="POSTingredients"
-               value="n"
-               data-component="body">
-    <br>
-<p>validation.max. Example: <code>n</code></p>
-        </div>
-                <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>type_id</code></b>&nbsp;&nbsp;
-<small>integer</small>&nbsp;
- &nbsp;
-                <input type="number" style="display: none"
-               step="any"               name="type_id"                data-endpoint="POSTingredients"
-               value="1"
-               data-component="body">
-    <br>
-<p>L'identifiant du type d'ingrédient. Example: <code>1</code></p>
-        </div>
-                <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>measure_id</code></b>&nbsp;&nbsp;
-<small>integer</small>&nbsp;
- &nbsp;
-                <input type="number" style="display: none"
-               step="any"               name="measure_id"                data-endpoint="POSTingredients"
-               value="1"
-               data-component="body">
-    <br>
-<p>L'identifiant de l'unité de mesure. Example: <code>1</code></p>
-        </div>
-                <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>max_quantity</code></b>&nbsp;&nbsp;
-<small>numeric</small>&nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="max_quantity"                data-endpoint="POSTingredients"
-               value="1000"
-               data-component="body">
-    <br>
-<p>La quantité maximale de l'ingrédient. Example: <code>1000</code></p>
-        </div>
-                <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>is_connected</code></b>&nbsp;&nbsp;
-<small>boolean</small>&nbsp;
-<i>optional</i> &nbsp;
-                <label data-endpoint="POSTingredients" style="display: none">
-            <input type="radio" name="is_connected"
-                   value="true"
-                   data-endpoint="POSTingredients"
-                   data-component="body"             >
-            <code>true</code>
-        </label>
-        <label data-endpoint="POSTingredients" style="display: none">
-            <input type="radio" name="is_connected"
-                   value="false"
-                   data-endpoint="POSTingredients"
-                   data-component="body"             >
-            <code>false</code>
-        </label>
-    <br>
-<p>Indique si l'ingrédient est connecté à un capteur. Example: <code>false</code></p>
-        </div>
-        </form>
 
                     <h2 id="ingredients-DELETEingredients-batch">DELETE ingredients/batch</h2>
 
@@ -1856,7 +2798,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
     
 
-                                <h2 id="types-GETtypes">GET types</h2>
+                                <h2 id="types-POSTtypes">POST types</h2>
 
 <p>
 <small class="badge badge-darkred">requires authentication</small>
@@ -1864,13 +2806,13 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 
 
-<span id="example-requests-GETtypes">
+<span id="example-requests-POSTtypes">
 <blockquote>Example request:</blockquote>
 
 
 <div class="bash-example">
-    <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/types" \
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost/types" \
     --header "Authorization: Basic Entrez vos identifiants" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -1888,13 +2830,13 @@ const headers = {
 };
 
 fetch(url, {
-    method: "GET",
+    method: "POST",
     headers,
 }).then(response =&gt; response.json());</code></pre></div>
 
 </span>
 
-<span id="example-responses-GETtypes">
+<span id="example-responses-POSTtypes">
             <blockquote>
             <p>Example response (200):</p>
         </blockquote>
@@ -1919,50 +2861,50 @@ fetch(url, {
 }</code>
  </pre>
     </span>
-<span id="execution-results-GETtypes" hidden>
+<span id="execution-results-POSTtypes" hidden>
     <blockquote>Received response<span
-                id="execution-response-status-GETtypes"></span>:
+                id="execution-response-status-POSTtypes"></span>:
     </blockquote>
-    <pre class="json"><code id="execution-response-content-GETtypes"
+    <pre class="json"><code id="execution-response-content-POSTtypes"
       data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
 </span>
-<span id="execution-error-GETtypes" hidden>
+<span id="execution-error-POSTtypes" hidden>
     <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETtypes">
+    <pre><code id="execution-error-message-POSTtypes">
 
 Tip: Check that you&#039;re properly connected to the network.
 If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
 You can check the Dev Tools console for debugging information.</code></pre>
 </span>
-<form id="form-GETtypes" data-method="GET"
+<form id="form-POSTtypes" data-method="POST"
       data-path="types"
       data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETtypes', this);">
+      onsubmit="event.preventDefault(); executeTryOut('POSTtypes', this);">
     <h3>
         Request&nbsp;&nbsp;&nbsp;
                     <button type="button"
                     style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETtypes"
-                    onclick="tryItOut('GETtypes');">Try it out ⚡
+                    id="btn-tryout-POSTtypes"
+                    onclick="tryItOut('POSTtypes');">Try it out ⚡
             </button>
             <button type="button"
                     style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETtypes"
-                    onclick="cancelTryOut('GETtypes');" hidden>Cancel 🛑
+                    id="btn-canceltryout-POSTtypes"
+                    onclick="cancelTryOut('POSTtypes');" hidden>Cancel 🛑
             </button>&nbsp;&nbsp;
             <button type="submit"
                     style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETtypes"
+                    id="btn-executetryout-POSTtypes"
                     data-initial-text="Send Request 💥"
                     data-loading-text="⏱ Sending..."
                     hidden>Send Request 💥
             </button>
             </h3>
             <p>
-            <small class="badge badge-green">GET</small>
+            <small class="badge badge-black">POST</small>
             <b><code>types</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
@@ -1971,7 +2913,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Authorization" class="auth-value"               data-endpoint="GETtypes"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTtypes"
                value="Basic Entrez vos identifiants"
                data-component="header">
     <br>
@@ -1982,7 +2924,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="GETtypes"
+                              name="Content-Type"                data-endpoint="POSTtypes"
                value="application/json"
                data-component="header">
     <br>
@@ -1993,7 +2935,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="GETtypes"
+                              name="Accept"                data-endpoint="POSTtypes"
                value="application/json"
                data-component="header">
     <br>
@@ -2100,7 +3042,7 @@ access-control-allow-headers: Content-Type, Authorization, X-Requested-With
                 &lt;p class=&quot;mt-2 text-gray-500 dark:text-gray-400 text-sm leading-relaxed&quot;&gt;
                     HTTP request received.
 
-                                            Response rendered in 370ms.
+                                            Response rendered in 732ms.
                                     &lt;/p&gt;
             &lt;/div&gt;
         &lt;/div&gt;

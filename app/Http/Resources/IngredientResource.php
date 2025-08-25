@@ -19,7 +19,7 @@ class IngredientResource extends JsonResource
             'label' => $this->label,
             'quantity' => $this->quantity,
             'max_quantity' => $this->max_quantity,
-            'balance_id' => $this->balance_id,
+            'connected_scale_id' => $this->connected_scale_id,
             'type' => $this->whenLoaded('type', function () {
                 return [
                     'id' => $this->type->id,

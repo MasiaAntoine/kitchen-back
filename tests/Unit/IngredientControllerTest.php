@@ -7,10 +7,11 @@ use App\Http\Requests\IngredientRequest;
 use App\Models\Ingredient;
 use App\Models\Type;
 use App\Models\Measure;
-use App\Models\Balance;
+use App\Models\ConnectedScale;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 
 class IngredientControllerTest extends TestCase
 {
@@ -19,7 +20,34 @@ class IngredientControllerTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+        
+        // Configuration spécifique pour SQLite
+        if (config('database.default') === 'sqlite') {
+            $this->configureSqliteForTests();
+        }
+        
         $this->controller = new IngredientController();
+    }
+
+    protected function configureSqliteForTests(): void
+    {
+        // Créer la table connected_scales si elle n'existe pas
+        if (!Schema::hasTable('connected_scales')) {
+            Schema::create('connected_scales', function ($table) {
+                $table->id();
+                $table->string('mac_address')->unique();
+                $table->timestamp('last_update')->nullable();
+                $table->string('name')->nullable();
+                $table->timestamps();
+            });
+        }
+
+        // Ajouter la colonne connected_scale_id à ingredients si elle n'existe pas
+        if (!Schema::hasColumn('ingredients', 'connected_scale_id')) {
+            Schema::table('ingredients', function ($table) {
+                $table->foreignId('connected_scale_id')->nullable()->constrained('connected_scales')->onDelete('set null');
+            });
+        }
     }
 
     public function test_ingredient_controller_can_store_ingredient()
@@ -115,12 +143,12 @@ class IngredientControllerTest extends TestCase
     {
         $type = Type::factory()->create();
         $measure = Measure::factory()->create();
-        $balance = Balance::factory()->create();
+        $connectedScale = ConnectedScale::factory()->create();
         
         Ingredient::factory()->create([
             'type_id' => $type->id,
             'measure_id' => $measure->id,
-            'balance_id' => $balance->id,
+            'connected_scale_id' => $connectedScale->id,
         ]);
         
         $response = $this->controller->getConnectedIngredients();

@@ -5,11 +5,11 @@ namespace Tests\Unit;
 use App\Models\Measure;
 use App\Models\Ingredient;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Traits\ConfigureSqliteDatabase;
 
 class MeasureTest extends TestCase
 {
-    use RefreshDatabase;
+    use ConfigureSqliteDatabase;
 
     public function test_measure_can_be_created_with_valid_data()
     {

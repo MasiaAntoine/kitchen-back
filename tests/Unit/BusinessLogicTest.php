@@ -5,13 +5,13 @@ namespace Tests\Unit;
 use App\Models\Ingredient;
 use App\Models\Type;
 use App\Models\Measure;
-use App\Models\Balance;
+use App\Models\ConnectedScale;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Traits\ConfigureSqliteDatabase;
 
 class BusinessLogicTest extends TestCase
 {
-    use RefreshDatabase;
+    use ConfigureSqliteDatabase;
 
     public function test_ingredient_stock_level_calculation()
     {
@@ -57,35 +57,35 @@ class BusinessLogicTest extends TestCase
         $this->assertFalse($normalStockIngredient->quantity <= ($normalStockIngredient->max_quantity * 0.5));
     }
 
-    public function test_balance_online_status_based_on_last_update()
+    public function test_connected_scale_online_status_based_on_last_update()
     {
-        $recentBalance = Balance::create([
+        $recentConnectedScale = ConnectedScale::create([
             'mac_address' => 'AA:BB:CC:DD:EE:FF',
             'name' => 'Balance Récente',
             'last_update' => now()->subMinutes(2),
         ]);
 
-        $oldBalance = Balance::create([
+        $oldConnectedScale = ConnectedScale::create([
             'mac_address' => 'BB:CC:DD:EE:FF:AA',
             'name' => 'Balance Ancienne',
             'last_update' => now()->subMinutes(10),
         ]);
 
-        $this->assertTrue($recentBalance->isOnline());
-        $this->assertFalse($oldBalance->isOnline());
+        $this->assertTrue($recentConnectedScale->isOnline());
+        $this->assertFalse($oldConnectedScale->isOnline());
     }
 
     public function test_ingredient_connection_status()
     {
         $type = Type::factory()->create();
         $measure = Measure::factory()->create();
-        $balance = Balance::factory()->create();
+        $connectedScale = ConnectedScale::factory()->create();
         
         $connectedIngredient = Ingredient::create([
             'label' => 'Connecté',
             'type_id' => $type->id,
             'measure_id' => $measure->id,
-            'balance_id' => $balance->id,
+            'connected_scale_id' => $connectedScale->id,
             'quantity' => 500,
             'max_quantity' => 1000,
         ]);
@@ -94,7 +94,7 @@ class BusinessLogicTest extends TestCase
             'label' => 'Non Connecté',
             'type_id' => $type->id,
             'measure_id' => $measure->id,
-            'balance_id' => null,
+            'connected_scale_id' => null,
             'quantity' => 300,
             'max_quantity' => 800,
         ]);
@@ -195,13 +195,13 @@ class BusinessLogicTest extends TestCase
         $type = Type::factory()->create();
         $measure = Measure::factory()->create();
         
-        $balance1 = Balance::create([
+        $connectedScale1 = ConnectedScale::create([
             'mac_address' => 'AA:BB:CC:DD:EE:FF',
             'name' => 'Balance 1',
             'last_update' => now(),
         ]);
         
-        $balance2 = Balance::create([
+        $connectedScale2 = ConnectedScale::create([
             'mac_address' => 'BB:CC:DD:EE:FF:AA',
             'name' => 'Balance 2',
             'last_update' => now(),
@@ -211,7 +211,7 @@ class BusinessLogicTest extends TestCase
             'label' => 'Ingrédient 1',
             'type_id' => $type->id,
             'measure_id' => $measure->id,
-            'balance_id' => $balance1->id,
+            'connected_scale_id' => $connectedScale1->id,
             'quantity' => 400,
             'max_quantity' => 1000,
         ]);
@@ -220,13 +220,13 @@ class BusinessLogicTest extends TestCase
             'label' => 'Ingrédient 2',
             'type_id' => $type->id,
             'measure_id' => $measure->id,
-            'balance_id' => $balance2->id,
+            'connected_scale_id' => $connectedScale2->id,
             'quantity' => 600,
             'max_quantity' => 1200,
         ]);
 
-        $this->assertEquals($balance1->id, $ingredient1->balance_id);
-        $this->assertEquals($balance2->id, $ingredient2->balance_id);
-        $this->assertNotEquals($ingredient1->balance_id, $ingredient2->balance_id);
+        $this->assertEquals($connectedScale1->id, $ingredient1->connected_scale_id);
+        $this->assertEquals($connectedScale2->id, $ingredient2->connected_scale_id);
+        $this->assertNotEquals($ingredient1->connected_scale_id, $ingredient2->connected_scale_id);
     }
 }

@@ -12,7 +12,7 @@ class Ingredient extends Model
 
     protected $fillable = [
         'label',
-        'balance_id',
+        'connected_scale_id',
         'type_id',
         'quantity',
         'max_quantity',
@@ -26,7 +26,7 @@ class Ingredient extends Model
 
     public function getIsConnectedAttribute(): bool
     {
-        return !empty($this->balance_id);
+        return !empty($this->connected_scale_id);
     }
 
     public function type(): BelongsTo
@@ -39,8 +39,8 @@ class Ingredient extends Model
         return $this->belongsTo(Measure::class);
     }
 
-    public function balance(): BelongsTo
+    public function connectedScale(): BelongsTo
     {
-        return $this->belongsTo(Balance::class, 'balance_id');
+        return $this->belongsTo(ConnectedScale::class, 'connected_scale_id');
     }
 }

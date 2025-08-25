@@ -3,16 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\IngredientResource;
-use App\Models\Balance;
+use App\Models\ConnectedScale;
 use App\Models\Ingredient;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class BalanceController extends Controller
+class ConnectedScaleController extends Controller
 {
     /**
-     * @group Balances
+     * @group ConnectedScales
      * @title Récupérer la liste des balances
      * @description Cette route permet de récupérer toutes les balances connectées avec leurs adresses MAC et noms.
      *
@@ -35,22 +35,22 @@ class BalanceController extends Controller
      */
     public function index(): JsonResponse
     {
-        $balances = Balance::select('id', 'mac_address', 'name')
+        $connectedScales = ConnectedScale::select('id', 'mac_address', 'name')
             ->get()
-            ->map(function ($balance) {
+            ->map(function ($connectedScale) {
                 return [
-                    'id' => $balance->id,
-                    'mac_address' => $balance->mac_address,
-                    'name' => $balance->name,
-                    'is_online' => $balance->isOnline(),
+                    'id' => $connectedScale->id,
+                    'mac_address' => $connectedScale->mac_address,
+                    'name' => $connectedScale->name,
+                    'is_online' => $connectedScale->isOnline(),
                 ];
             });
 
-        return response()->json($balances);
+        return response()->json($connectedScales);
     }
 
     /**
-     * @group Balances
+     * @group ConnectedScales
      * @title Ajouter une nouvelle balance
      * @description Cette route permet d'ajouter une nouvelle balance avec son adresse MAC et son nom.
      *
@@ -80,7 +80,7 @@ class BalanceController extends Controller
     public function store(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'mac_address' => 'required|string|unique:balances,mac_address',
+            'mac_address' => 'required|string|unique:connected_scales,mac_address',
             'name' => 'required|string|max:255',
         ], [
             'mac_address.required' => 'Le champ adresse MAC est obligatoire',
@@ -95,7 +95,7 @@ class BalanceController extends Controller
             ], 422);
         }
 
-        $balance = Balance::create([
+        $connectedScale = ConnectedScale::create([
             'mac_address' => $request->mac_address,
             'name' => $request->name,
             'last_update' => now(),
@@ -103,11 +103,11 @@ class BalanceController extends Controller
 
         return response()->json([
             'data' => [
-                'id' => $balance->id,
-                'mac_address' => $balance->mac_address,
-                'name' => $balance->name,
+                'id' => $connectedScale->id,
+                'mac_address' => $connectedScale->mac_address,
+                'name' => $connectedScale->name,
                 'is_online' => true,
-                'last_update' => $balance->last_update,
+                'last_update' => $connectedScale->last_update,
             ],
             'message' => 'Balance créée avec succès'
         ], 201);
@@ -115,19 +115,19 @@ class BalanceController extends Controller
 
 
     /**
-     * @group Balances
+     * @group ConnectedScales
      * @title Associer une balance à un ingrédient
      * @description Cette route permet d'associer une balance existante à un ingrédient existant.
      * Une balance ne peut être associée qu'à un seul ingrédient à la fois.
      *
-     * @urlParam balance_id required L'identifiant de la balance à associer. Example: 1
+     * @urlParam connected_scale_id required L'identifiant de la balance à associer. Example: 1
      * @bodyParam ingredient_id integer required L'identifiant de l'ingrédient à associer à la balance. Example: 3
      *
      * @response 200 success {
      *  "status": "success",
      *  "message": "Balance associée avec succès à l'ingrédient",
      *  "data": {
-     *    "balance": {
+     *    "connected_scale": {
      *      "id": 1,
      *      "mac_address": "00:11:22:33:44:55",
      *      "name": "Balance cuisine"
@@ -154,7 +154,7 @@ class BalanceController extends Controller
      *  }
      * }
      */
-    public function associateWithIngredient(Request $request, $balance_id): JsonResponse
+    public function associateWithIngredient(Request $request, $connected_scale_id): JsonResponse
     {
         // Validation
         $validator = Validator::make($request->all(), [
@@ -172,15 +172,15 @@ class BalanceController extends Controller
         }
 
         // Récupération de la balance et de l'ingrédient
-        $balance = Balance::find($balance_id);
+        $connectedScale = ConnectedScale::find($connected_scale_id);
         $ingredient = Ingredient::find($request->ingredient_id);
 
-        if (!$balance || !$ingredient) {
+        if (!$connectedScale || !$ingredient) {
             return response()->json(['message' => 'Balance ou ingrédient non trouvé'], 404);
         }
 
         // Vérifier si la balance est déjà associée à un autre ingrédient
-        $existingIngredient = Ingredient::where('balance_id', $balance_id)
+        $existingIngredient = Ingredient::where('connected_scale_id', $connected_scale_id)
             ->where('id', '!=', $ingredient->id)
             ->first();
 
@@ -195,17 +195,17 @@ class BalanceController extends Controller
         }
 
         // Associer la balance à l'ingrédient
-        $ingredient->balance_id = $balance_id;
+        $ingredient->connected_scale_id = $connected_scale_id;
         $ingredient->save();
 
         return response()->json([
             'status' => 'success',
             'message' => 'Balance associée avec succès à l\'ingrédient',
             'data' => [
-                'balance' => [
-                    'id' => $balance->id,
-                    'mac_address' => $balance->mac_address,
-                    'name' => $balance->name,
+                'connected_scale' => [
+                    'id' => $connectedScale->id,
+                    'mac_address' => $connectedScale->mac_address,
+                    'name' => $connectedScale->name,
                 ],
                 'ingredient' => [
                     'id' => $ingredient->id,
@@ -220,7 +220,7 @@ class BalanceController extends Controller
 
 
     /**
-     * @group Balances
+     * @group ConnectedScales
      * @title Mettre à jour la quantité d'un ingrédient via l'adresse MAC
      * @description Cette route permet de mettre à jour la quantité d'un ingrédient en utilisant l'adresse MAC de la balance associée.
      *
@@ -277,20 +277,20 @@ class BalanceController extends Controller
         }
 
         // Recherche de la balance par son adresse MAC
-        $balance = Balance::where('mac_address', $request->mac_address)->first();
+        $connectedScale = ConnectedScale::where('mac_address', $request->mac_address)->first();
 
-        if (!$balance) {
+        if (!$connectedScale) {
             return response()->json([
                 'message' => 'Balance non trouvée avec cette adresse MAC'
             ], 404);
         }
 
         // Mise à jour de la dernière date d'activité de la balance
-        $balance->last_update = now();
-        $balance->save();
+        $connectedScale->last_update = now();
+        $connectedScale->save();
 
         // Recherche de l'ingrédient lié à cette balance
-        $ingredient = Ingredient::where('balance_id', $balance->id)->first();
+        $ingredient = Ingredient::where('connected_scale_id', $connectedScale->id)->first();
 
         if (!$ingredient) {
             return response()->json([
@@ -313,7 +313,7 @@ class BalanceController extends Controller
 
 
     /**
-     * @group Balances
+     * @group ConnectedScales
      * @title Supprimer une balance par adresse MAC
      * @description Cette route permet de supprimer une balance en utilisant son adresse MAC. Les ingrédients associés à cette balance seront déconnectés.
      *
@@ -358,33 +358,33 @@ class BalanceController extends Controller
         }
 
         // Recherche de la balance par son adresse MAC
-        $balance = Balance::where('mac_address', $request->mac_address)->first();
+        $connectedScale = ConnectedScale::where('mac_address', $request->mac_address)->first();
 
-        if (!$balance) {
+        if (!$connectedScale) {
             return response()->json([
                 'message' => 'Balance non trouvée avec cette adresse MAC'
             ], 404);
         }
 
         // Récupérer les informations de la balance avant de la supprimer
-        $balanceData = [
-            'mac_address' => $balance->mac_address,
-            'name' => $balance->name
+        $connectedScaleData = [
+            'mac_address' => $connectedScale->mac_address,
+            'name' => $connectedScale->name
         ];
 
         // Déconnecter tous les ingrédients associés à cette balance
-        Ingredient::where('balance_id', $balance->id)
+        Ingredient::where('connected_scale_id', $connectedScale->id)
             ->update([
-                'balance_id' => null,
+                'connected_scale_id' => null,
             ]);
 
         // Supprimer la balance
-        $balance->delete();
+        $connectedScale->delete();
 
         return response()->json([
             'status' => 'success',
             'message' => 'Balance supprimée avec succès',
-            'data' => $balanceData
+            'data' => $connectedScaleData
         ]);
     }
 }

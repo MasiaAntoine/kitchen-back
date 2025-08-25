@@ -185,12 +185,12 @@ class IngredientController extends Controller
     */
     public function getIngredientsByType(): JsonResponse
     {
-        // Vérification directe des ingrédients sans balance_id
-        $rawIngredients = Ingredient::whereNull('balance_id')->get();
+        // Vérification directe des ingrédients sans connected_scale_id
+        $rawIngredients = Ingredient::whereNull('connected_scale_id')->get();
 
         // Récupérer tous les types avec leurs ingrédients non connectés
         $types = Type::with(['ingredients' => function($query) {
-            $query->whereNull('balance_id')->with('measure');
+            $query->whereNull('connected_scale_id')->with('measure');
         }])->get();
 
         $result = [];
@@ -258,7 +258,7 @@ class IngredientController extends Controller
     {
         $validated = $request->validate([
             'label' => 'required|string|max:255',
-            'balance_id' => 'nullable|string|max:255',
+            'connected_scale_id' => 'nullable|integer|exists:connected_scales,id',
             'type_id' => 'required|exists:types,id',
             'measure_id' => 'required|exists:measures,id',
             'max_quantity' => 'required|numeric|min:0',
@@ -343,7 +343,7 @@ class IngredientController extends Controller
     public function getConnectedIngredients(): JsonResponse
     {
         $ingredients = Ingredient::with(['type', 'measure'])
-            ->whereNotNull('balance_id')
+            ->whereNotNull('connected_scale_id')
             ->get();
 
         return response()->json([

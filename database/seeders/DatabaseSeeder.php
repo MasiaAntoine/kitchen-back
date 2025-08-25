@@ -28,9 +28,15 @@ class DatabaseSeeder extends Seeder
 
         // L'ordre des seeders est important
         $this->call([
-            TypeSeeder::class,       // D'abord les types
-            MeasureSeeder::class,    // Ensuite les mesures
-            IngredientSeeder::class, // Enfin les ingrédients qui dépendent des deux autres
+            TypeSeeder::class,           // D'abord les types
+            MeasureSeeder::class,        // Ensuite les mesures
+            ConnectedScaleSeeder::class, // Puis les balances connectées
+            IngredientSeeder::class,     // Enfin les ingrédients qui dépendent des autres
         ]);
+
+        // Ajouter le seeder de test pour SQLite
+        if (config('database.default') === 'sqlite') {
+            $this->call(TestDatabaseSeeder::class);
+        }
     }
 }

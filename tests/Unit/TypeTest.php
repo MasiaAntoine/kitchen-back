@@ -5,11 +5,11 @@ namespace Tests\Unit;
 use App\Models\Type;
 use App\Models\Ingredient;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Traits\ConfigureSqliteDatabase;
 
 class TypeTest extends TestCase
 {
-    use RefreshDatabase;
+    use ConfigureSqliteDatabase;
 
     public function test_type_can_be_created_with_valid_data()
     {

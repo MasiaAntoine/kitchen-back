@@ -29,8 +29,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'ingredients',
             'types',
             'measures',
-            'balances',
-            'balances/*',
+            'connected-scales',
+            'connected-scales/*',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

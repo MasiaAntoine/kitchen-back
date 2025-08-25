@@ -5,13 +5,13 @@ namespace Tests\Unit;
 use App\Models\Ingredient;
 use App\Models\Type;
 use App\Models\Measure;
-use App\Models\Balance;
+use App\Models\ConnectedScale;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Traits\ConfigureSqliteDatabase;
 
 class IngredientTest extends TestCase
 {
-    use RefreshDatabase;
+    use ConfigureSqliteDatabase;
 
     public function test_ingredient_can_be_created_with_valid_data()
     {
@@ -66,36 +66,36 @@ class IngredientTest extends TestCase
         $this->assertEquals($measure->id, $ingredient->measure->id);
     }
 
-    public function test_ingredient_has_balance_relationship()
+    public function test_ingredient_has_connected_scale_relationship()
     {
         $type = Type::factory()->create();
         $measure = Measure::factory()->create();
-        $balance = Balance::factory()->create();
+        $connectedScale = ConnectedScale::factory()->create();
         
         $ingredient = Ingredient::create([
             'label' => 'Lait',
             'type_id' => $type->id,
             'measure_id' => $measure->id,
-            'balance_id' => $balance->id,
+            'connected_scale_id' => $connectedScale->id,
             'quantity' => 600,
             'max_quantity' => 1000,
         ]);
 
-        $this->assertInstanceOf(Balance::class, $ingredient->balance);
-        $this->assertEquals($balance->id, $ingredient->balance->id);
+        $this->assertInstanceOf(ConnectedScale::class, $ingredient->connectedScale);
+        $this->assertEquals($connectedScale->id, $ingredient->connectedScale->id);
     }
 
-    public function test_is_connected_attribute_returns_true_when_balance_id_exists()
+    public function test_is_connected_attribute_returns_true_when_connected_scale_id_exists()
     {
         $type = Type::factory()->create();
         $measure = Measure::factory()->create();
-        $balance = Balance::factory()->create();
+        $connectedScale = ConnectedScale::factory()->create();
         
         $ingredient = Ingredient::create([
             'label' => 'Oeufs',
             'type_id' => $type->id,
             'measure_id' => $measure->id,
-            'balance_id' => $balance->id,
+            'connected_scale_id' => $connectedScale->id,
             'quantity' => 12,
             'max_quantity' => 24,
         ]);

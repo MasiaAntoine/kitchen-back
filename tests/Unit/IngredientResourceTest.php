@@ -7,12 +7,12 @@ use App\Models\Ingredient;
 use App\Models\Type;
 use App\Models\Measure;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Traits\ConfigureSqliteDatabase;
 use Illuminate\Http\Request;
 
 class IngredientResourceTest extends TestCase
 {
-    use RefreshDatabase;
+    use ConfigureSqliteDatabase;
 
     public function test_ingredient_resource_transforms_ingredient_data()
     {
@@ -112,7 +112,7 @@ class IngredientResourceTest extends TestCase
         $this->assertEquals('Ingrédient 2', $transformed[1]['label']);
     }
 
-    public function test_ingredient_resource_handles_null_balance_id()
+    public function test_ingredient_resource_handles_null_connected_scale_id()
     {
         $type = Type::factory()->create();
         $measure = Measure::factory()->create();
@@ -120,34 +120,34 @@ class IngredientResourceTest extends TestCase
         $ingredient = Ingredient::factory()->create([
             'type_id' => $type->id,
             'measure_id' => $measure->id,
-            'balance_id' => null,
+            'connected_scale_id' => null,
         ]);
 
         $resource = new IngredientResource($ingredient);
         $request = Request::create('/');
         $transformed = $resource->toArray($request);
 
-        $this->assertArrayHasKey('balance_id', $transformed);
-        $this->assertNull($transformed['balance_id']);
+        $this->assertArrayHasKey('connected_scale_id', $transformed);
+        $this->assertNull($transformed['connected_scale_id']);
     }
 
-    public function test_ingredient_resource_handles_balance_id()
+    public function test_ingredient_resource_handles_connected_scale_id()
     {
         $type = Type::factory()->create();
         $measure = Measure::factory()->create();
-        $balance = \App\Models\Balance::factory()->create();
+        $connectedScale = \App\Models\ConnectedScale::factory()->create();
         
         $ingredient = Ingredient::factory()->create([
             'type_id' => $type->id,
             'measure_id' => $measure->id,
-            'balance_id' => $balance->id,
+            'connected_scale_id' => $connectedScale->id,
         ]);
 
         $resource = new IngredientResource($ingredient);
         $request = Request::create('/');
         $transformed = $resource->toArray($request);
 
-        $this->assertArrayHasKey('balance_id', $transformed);
-        $this->assertEquals($balance->id, $transformed['balance_id']);
+        $this->assertArrayHasKey('connected_scale_id', $transformed);
+        $this->assertEquals($connectedScale->id, $transformed['connected_scale_id']);
     }
 }

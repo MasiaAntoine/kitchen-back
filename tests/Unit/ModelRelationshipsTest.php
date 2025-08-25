@@ -5,14 +5,14 @@ namespace Tests\Unit;
 use App\Models\Ingredient;
 use App\Models\Type;
 use App\Models\Measure;
-use App\Models\Balance;
+use App\Models\ConnectedScale;
 use App\Models\User;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Traits\ConfigureSqliteDatabase;
 
 class ModelRelationshipsTest extends TestCase
 {
-    use RefreshDatabase;
+    use ConfigureSqliteDatabase;
 
     public function test_type_has_many_ingredients_relationship()
     {
@@ -42,18 +42,18 @@ class ModelRelationshipsTest extends TestCase
         $this->assertTrue($measure->ingredients->contains($ingredient2));
     }
 
-    public function test_balance_has_one_ingredient_relationship()
+    public function test_connected_scale_has_one_ingredient_relationship()
     {
-        $balance = Balance::create([
+        $connectedScale = ConnectedScale::create([
             'mac_address' => 'AA:BB:CC:DD:EE:FF',
             'name' => 'Balance Test',
             'last_update' => now(),
         ]);
 
-        $ingredient = Ingredient::factory()->create(['balance_id' => $balance->id]);
+        $ingredient = Ingredient::factory()->create(['connected_scale_id' => $connectedScale->id]);
 
-        $this->assertInstanceOf(Ingredient::class, $balance->ingredient);
-        $this->assertEquals($ingredient->id, $balance->ingredient->id);
+        $this->assertInstanceOf(Ingredient::class, $connectedScale->ingredient);
+        $this->assertEquals($ingredient->id, $connectedScale->ingredient->id);
     }
 
     public function test_ingredient_belongs_to_type_relationship()
@@ -76,19 +76,19 @@ class ModelRelationshipsTest extends TestCase
         $this->assertEquals('Kilogrammes', $ingredient->measure->name);
     }
 
-    public function test_ingredient_belongs_to_balance_relationship()
+    public function test_ingredient_belongs_to_connected_scale_relationship()
     {
-        $balance = Balance::create([
+        $connectedScale = ConnectedScale::create([
             'mac_address' => 'AA:BB:CC:DD:EE:FF',
             'name' => 'Balance Test',
             'last_update' => now(),
         ]);
         
-        $ingredient = Ingredient::factory()->create(['balance_id' => $balance->id]);
+        $ingredient = Ingredient::factory()->create(['connected_scale_id' => $connectedScale->id]);
 
-        $this->assertInstanceOf(Balance::class, $ingredient->balance);
-        $this->assertEquals($balance->id, $ingredient->balance->id);
-        $this->assertEquals('AA:BB:CC:DD:EE:FF', $ingredient->balance->mac_address);
+        $this->assertInstanceOf(ConnectedScale::class, $ingredient->connectedScale);
+        $this->assertEquals($connectedScale->id, $ingredient->connectedScale->id);
+        $this->assertEquals('AA:BB:CC:DD:EE:FF', $ingredient->connectedScale->mac_address);
     }
 
     public function test_cascade_relationships_work_correctly()
@@ -126,7 +126,7 @@ class ModelRelationshipsTest extends TestCase
         $this->assertEquals($measure->id, $ingredient2->measure->id);
     }
 
-    public function test_ingredient_without_balance_has_null_balance_relationship()
+    public function test_ingredient_without_connected_scale_has_null_connected_scale_relationship()
     {
         $type = Type::factory()->create();
         $measure = Measure::factory()->create();
@@ -134,27 +134,27 @@ class ModelRelationshipsTest extends TestCase
         $ingredient = Ingredient::factory()->create([
             'type_id' => $type->id,
             'measure_id' => $measure->id,
-            'balance_id' => null,
+            'connected_scale_id' => null,
         ]);
 
-        $this->assertNull($ingredient->balance);
+        $this->assertNull($ingredient->connectedScale);
         $this->assertFalse($ingredient->is_connected);
     }
 
-    public function test_ingredient_with_balance_has_valid_balance_relationship()
+    public function test_ingredient_with_connected_scale_has_valid_connected_scale_relationship()
     {
         $type = Type::factory()->create();
         $measure = Measure::factory()->create();
-        $balance = Balance::factory()->create();
+        $connectedScale = ConnectedScale::factory()->create();
         
         $ingredient = Ingredient::factory()->create([
             'type_id' => $type->id,
             'measure_id' => $measure->id,
-            'balance_id' => $balance->id,
+            'connected_scale_id' => $connectedScale->id,
         ]);
 
-        $this->assertNotNull($ingredient->balance);
-        $this->assertInstanceOf(Balance::class, $ingredient->balance);
+        $this->assertNotNull($ingredient->connectedScale);
+        $this->assertInstanceOf(ConnectedScale::class, $ingredient->connectedScale);
         $this->assertTrue($ingredient->is_connected);
     }
 }

@@ -30,7 +30,7 @@ class IngredientRequestTest extends TestCase
         $this->assertArrayHasKey('measure_id', $rules);
         $this->assertArrayHasKey('max_quantity', $rules);
         $this->assertArrayHasKey('quantity', $rules);
-        $this->assertArrayHasKey('balance_id', $rules);
+        $this->assertArrayHasKey('connected_scale_id', $rules);
         
         $this->assertStringContainsString('required', $rules['label']);
         $this->assertStringContainsString('string', $rules['label']);
@@ -48,7 +48,7 @@ class IngredientRequestTest extends TestCase
             'measure_id' => $measure->id,
             'max_quantity' => 1000,
             'quantity' => 500,
-            'balance_id' => null,
+            'connected_scale_id' => null,
         ];
         
         $validator = Validator::make($data, (new IngredientRequest())->rules());
