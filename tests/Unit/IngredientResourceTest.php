@@ -4,8 +4,8 @@ namespace Tests\Unit;
 
 use App\Http\Resources\IngredientResource;
 use App\Models\Ingredient;
-use App\Models\Type;
-use App\Models\Measure;
+use App\Models\PlaceType;
+use App\Models\MeasurementUnit;
 use Tests\TestCase;
 use Tests\Traits\ConfigureSqliteDatabase;
 use Illuminate\Http\Request;
@@ -35,8 +35,8 @@ class IngredientResourceTest extends TestCase
         $this->assertArrayHasKey('label', $transformed);
         $this->assertArrayHasKey('quantity', $transformed);
         $this->assertArrayHasKey('max_quantity', $transformed);
-        $this->assertArrayHasKey('type', $transformed);
-        $this->assertArrayHasKey('measure', $transformed);
+        $this->assertArrayHasKey('place_type', $transformed);
+        $this->assertArrayHasKey('measurement_unit', $transformed);
 
         $this->assertEquals('Tomate', $transformed['label']);
         $this->assertEquals(500, $transformed['quantity']);
@@ -54,14 +54,14 @@ class IngredientResourceTest extends TestCase
         ]);
 
         // Charger les relations
-        $ingredient->load(['type', 'measure']);
+        $ingredient->load(['placeType', 'measurementUnit']);
 
         $resource = new IngredientResource($ingredient);
         $request = Request::create('/');
         $transformed = $resource->toArray($request);
 
-        $this->assertArrayHasKey('type', $transformed);
-        $this->assertEquals('Viandes', $transformed['type']['name']);
+        $this->assertArrayHasKey('place_type', $transformed);
+        $this->assertEquals('Viandes', $transformed['place_type']['name']);
     }
 
     public function test_ingredient_resource_includes_measure_information()
@@ -75,15 +75,15 @@ class IngredientResourceTest extends TestCase
         ]);
 
         // Charger les relations
-        $ingredient->load(['type', 'measure']);
+        $ingredient->load(['placeType', 'measurementUnit']);
 
         $resource = new IngredientResource($ingredient);
         $request = Request::create('/');
         $transformed = $resource->toArray($request);
 
-        $this->assertArrayHasKey('measure', $transformed);
-        $this->assertEquals('Millilitres', $transformed['measure']['name']);
-        $this->assertEquals('ml', $transformed['measure']['symbol']);
+        $this->assertArrayHasKey('measurement_unit', $transformed);
+        $this->assertEquals('Millilitres', $transformed['measurement_unit']['name']);
+        $this->assertEquals('ml', $transformed['measurement_unit']['symbol']);
     }
 
     public function test_ingredient_resource_collection_works_correctly()

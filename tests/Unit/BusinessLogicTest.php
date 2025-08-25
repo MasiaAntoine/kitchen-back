@@ -3,8 +3,8 @@
 namespace Tests\Unit;
 
 use App\Models\Ingredient;
-use App\Models\Type;
-use App\Models\Measure;
+use App\Models\PlaceType;
+use App\Models\MeasurementUnit;
 use App\Models\ConnectedScale;
 use Tests\TestCase;
 use Tests\Traits\ConfigureSqliteDatabase;
@@ -155,9 +155,9 @@ class BusinessLogicTest extends TestCase
             'max_quantity' => 500,
         ]);
 
-        $this->assertEquals('Légumes', $tomate->type->name);
-        $this->assertEquals('Viandes', $poulet->type->name);
-        $this->assertEquals('Épices', $poivre->type->name);
+        $this->assertEquals('Légumes', $tomate->placeType->name);
+        $this->assertEquals('Viandes', $poulet->placeType->name);
+        $this->assertEquals('Épices', $poivre->placeType->name);
     }
 
     public function test_measure_unit_consistency()
@@ -184,10 +184,10 @@ class BusinessLogicTest extends TestCase
             'max_quantity' => 5,
         ]);
 
-        $this->assertEquals('g', $ingredient1->measure->symbol);
-        $this->assertEquals('kg', $ingredient2->measure->symbol);
-        $this->assertEquals('Grammes', $ingredient1->measure->name);
-        $this->assertEquals('Kilogrammes', $ingredient2->measure->name);
+        $this->assertEquals('g', $ingredient1->measurementUnit->symbol);
+        $this->assertEquals('kg', $ingredient2->measurementUnit->symbol);
+        $this->assertEquals('Grammes', $ingredient1->measurementUnit->name);
+        $this->assertEquals('Kilogrammes', $ingredient2->measurementUnit->name);
     }
 
     public function test_ingredient_balance_association()

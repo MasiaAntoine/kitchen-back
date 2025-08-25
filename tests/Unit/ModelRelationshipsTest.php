@@ -3,8 +3,8 @@
 namespace Tests\Unit;
 
 use App\Models\Ingredient;
-use App\Models\Type;
-use App\Models\Measure;
+use App\Models\PlaceType;
+use App\Models\MeasurementUnit;
 use App\Models\ConnectedScale;
 use App\Models\User;
 use Tests\TestCase;

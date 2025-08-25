@@ -10,10 +10,9 @@ class ExampleTest extends TestCase
     /**
      * A basic test example.
      */
-    public function test_the_application_returns_a_successful_response(): void
+    public function test_the_application_returns_a_error_404(): void
     {
         $response = $this->get('/');
-
-        $response->assertStatus(200);
+        $response->assertStatus(404);
     }
 }

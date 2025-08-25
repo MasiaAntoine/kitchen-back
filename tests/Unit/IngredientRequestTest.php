@@ -3,8 +3,8 @@
 namespace Tests\Unit;
 
 use App\Http\Requests\IngredientRequest;
-use App\Models\Type;
-use App\Models\Measure;
+use App\Models\PlaceType;
+use App\Models\MeasurementUnit;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Validator;
@@ -141,6 +141,6 @@ class IngredientRequestTest extends TestCase
         $this->assertArrayHasKey('measurement_unit_id.exists', $messages);
         
         $this->assertEquals('Le nom de l\'ingrédient est obligatoire', $messages['label.required']);
-        $this->assertEquals('Le type de stockage est obligatoire', $messages['place_type_id.required']);
+        $this->assertEquals('Le type de lieu est obligatoire', $messages['place_type_id.required']);
     }
 }
